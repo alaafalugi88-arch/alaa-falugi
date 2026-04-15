@@ -2,31 +2,99 @@
 <html>
 <head>
   <title>Alaa AI</title>
+
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #00ffcc;
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 500px;
+      background: #111;
+      border: 1px solid #00ffcc;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00ffcc;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ffcc;
+    }
+
+    #chat {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #00ffcc;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #000;
+    }
+
+    .user {
+      color: #00ffff;
+    }
+
+    .ai {
+      color: #ff9900;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      background: #000;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+    }
+
+    .boot {
+      font-size: 12px;
+      margin-bottom: 10px;
+      color: #888;
+    }
+
+    .commands {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #777;
+      text-align: center;
+    }
+
+  </style>
 </head>
 
-<body style="background:black; color:lime; font-family:monospace; text-shadow:0 0 5px lime; padding:20px;">
+<body>
 
-<h2 style="color:lime;">Alaa AI System v1.0</h2>
+<div class="container">
 
-<div id="boot"></div>
+  <h2>Alaa AI System</h2>
 
-<div id="chat" style="margin-top:20px;"></div>
+  <div class="boot" id="boot"></div>
 
-<input id="input" placeholder="Ask the AI..." 
-style="width:100%; padding:10px; background:black; color:lime; border:1px solid lime;" />
+  <div id="chat"></div>
 
-<p style="margin-top:10px;">
-Commands: help | projects | skills | about | contact
-</p>
+  <input id="input" placeholder="Ask the AI..." />
+
+  <div class="commands">
+    help | projects | skills | about | contact
+  </div>
+
+</div>
 
 <script>
 
-// Boot messages
+// Boot animation
 let text = [
-  "Initializing AI System...",
-  "Loading Neural Network...",
-  "Connecting to Intelligence Core...",
-  "Welcome to Alaa Portfolio"
+  "Initializing AI...",
+  "Loading systems...",
+  "Connecting...",
+  "Ready ✔"
 ];
 
 let i = 0;
@@ -35,63 +103,71 @@ function typeLine() {
   if (i < text.length) {
     document.getElementById("boot").innerHTML += text[i] + "<br>";
     i++;
-    setTimeout(typeLine, 800);
+    setTimeout(typeLine, 600);
   }
 }
 
 typeLine();
 
-// Auto welcome message
+// Welcome message
 setTimeout(() => {
-  document.getElementById("chat").innerHTML += 
-    "<br><span style='color:orange'>AI:</span> Hello, I am Alaa AI 🤖<br>Type 'help' to begin.<br>";
-}, 4000);
+  addMessage("AI", "Welcome to Alaa AI 🤖 Type 'help' to start.");
+}, 2500);
+
+// Add message function
+function addMessage(sender, message) {
+  let chat = document.getElementById("chat");
+
+  let div = document.createElement("div");
+  div.innerHTML = `<span class="${sender === "User" ? "user" : "ai"}">${sender}:</span> ${message}`;
+
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
 
 // Smart replies
 function smartReply(input) {
   input = input.toLowerCase();
 
   if (input.includes("help")) {
-    return "Available commands: projects, skills, about, contact";
+    return "Commands: projects, skills, about, contact";
   }
 
   if (input.includes("about")) {
-    return "Alaa is an AI developer building intelligent automation systems.";
+    return "Alaa is an AI developer building smart systems.";
   }
 
   if (input.includes("projects")) {
-    return "Loading modules...\n1. Email AI System\n2. Data Analytics Engine";
+    return "1. Email AI System\n2. Data Analytics Engine";
   }
 
   if (input.includes("skills")) {
-    return "Python | SQL | AI | Automation | Data Analysis";
+    return "Python | SQL | AI | Automation";
   }
 
   if (input.includes("contact")) {
     return "GitHub: alaafalugi88-arch";
   }
 
-  return "Command not recognized. Type 'help'.";
+  return "Unknown command. Type 'help'.";
 }
 
-// Chat system
+// Input handler
 document.getElementById("input").addEventListener("keydown", function(e){
   if(e.key === "Enter"){
     let input = this.value;
+
+    addMessage("User", input);
+
     let reply = smartReply(input);
 
-    document.getElementById("chat").innerHTML += 
-      "<br><span style='color:cyan'>User:</span> " + input +
-      "<br><span style='color:orange'>AI:</span> " + reply + "<br>";
+    setTimeout(() => {
+      addMessage("AI", reply);
+    }, 400);
 
     this.value = "";
   }
 });
-
-</script>
-
-</body>
-</html>
 
 </script>
 
