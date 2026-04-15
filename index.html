@@ -4,6 +4,7 @@
 <title>Alaa Portfolio</title>
 
 <style>
+
 body {
   margin:0;
   font-family:'Segoe UI', sans-serif;
@@ -55,9 +56,8 @@ video {
   width:160px;
   height:200px;
   border-radius:15px;
-  opacity:0;
-  transform:scale(0.8);
-  animation:fadeIn 1s forwards;
+  object-fit:cover;
+  box-shadow:0 0 25px rgba(255,140,0,0.6);
 }
 
 /* NAME */
@@ -65,8 +65,6 @@ video {
   font-size:30px;
   margin-top:10px;
   color:#ffb347;
-  opacity:0;
-  animation:fadeIn 1.5s forwards;
 }
 
 /* QUESTIONS */
@@ -82,8 +80,6 @@ video {
   border-radius:10px;
   cursor:pointer;
   text-align:center;
-  opacity:0;
-  animation:slideIn 1s forwards;
 }
 
 .q:hover {
@@ -124,31 +120,12 @@ input {
   border-radius:10px;
 }
 
-/* POPUP */
-.popup {
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:#111;
-  padding:20px;
-  border-radius:15px;
-  display:none;
-}
-
-/* ANIMATIONS */
-@keyframes fadeIn {
-  to {opacity:1; transform:scale(1);}
-}
-
-@keyframes slideIn {
-  to {opacity:1; transform:translateY(0);}
-}
 </style>
 </head>
 
 <body>
 
+<!-- VIDEO -->
 <video autoplay muted loop>
   <source src="bg.mp4">
 </video>
@@ -160,7 +137,10 @@ input {
 <!-- LEFT -->
 <div class="left">
   <h2>About Me</h2>
-  <p>AI Developer building intelligent systems.</p>
+  <p>أنا علاء، مطور ذكاء اصطناعي بحب أبني أنظمة قوية.</p>
+
+  <h2>Skills</h2>
+  <p>Python, SQL, AI, Data Analytics</p>
 </div>
 
 <!-- RIGHT -->
@@ -171,7 +151,7 @@ input {
 
 <div class="questions">
   <div class="q" onclick="ask('who')">Who is Alaa?</div>
-  <div class="q" onclick="openProjects()">Projects</div>
+  <div class="q" onclick="ask('projects')">Projects</div>
   <div class="q" onclick="ask('skills')">Skills</div>
 </div>
 
@@ -184,17 +164,21 @@ input {
 
 </div>
 
-<!-- POPUP -->
-<div class="popup" id="popup">
-  <h2>Projects</h2>
-  <p>AI Email System + Data Analytics</p>
-  <button onclick="closePopup()">Close</button>
-</div>
-
 <script>
 
-/* SOUND */
+/* 🎧 MUSIC */
+let music = new Audio('music.mp3');
+music.loop = true;
+music.volume = 0.3;
+
+/* 🔊 SOUNDS */
 let clickSound = new Audio('click.mp3');
+let typingSound = new Audio('typing.mp3');
+
+/* ▶️ تشغيل الموسيقى بعد أول كبسة */
+document.body.addEventListener("click", () => {
+  music.play();
+}, { once: true });
 
 /* ADD MESSAGE */
 function add(sender,text){
@@ -207,33 +191,42 @@ function add(sender,text){
   typeText(div,text);
 }
 
-/* TYPING EFFECT */
+/* ⌨️ Typing */
 function typeText(el,text){
   let i=0;
+
   function typing(){
     if(i<text.length){
       el.innerHTML += text.charAt(i);
+
+      if(typingSound.src){
+        typingSound.currentTime = 0;
+        typingSound.play();
+      }
+
       i++;
       setTimeout(typing,30);
     }
   }
+
   typing();
 }
 
-/* AI PERSONA */
+/* AI */
 function reply(input){
   input=input.toLowerCase();
 
-  if(input.includes("who")) return "أنا علاء، مطور ذكاء اصطناعي بحب أبني أنظمة قوية.";
-  if(input.includes("skills")) return "أنا بشتغل Python, SQL, AI بشكل احترافي.";
-  if(input.includes("projects")) return "عندي مشاريع زي AI Email System.";
+  if(input.includes("who")) return "أنا علاء، مطور AI بحب أبني أنظمة قوية.";
+  if(input.includes("skills")) return "Python | SQL | AI";
+  if(input.includes("projects")) return "AI Email System + Analytics.";
 
   return "جرب تسأل بطريقة ثانية 😉";
 }
 
 /* ASK */
 function ask(q){
-  clickSound.play();
+  if(clickSound.src) clickSound.play();
+
   add("User",q);
   setTimeout(()=>add("AI",reply(q)),400);
 }
@@ -246,15 +239,6 @@ document.getElementById("input").addEventListener("keydown",function(e){
     this.value="";
   }
 });
-
-/* POPUP */
-function openProjects(){
-  document.getElementById("popup").style.display="block";
-}
-
-function closePopup(){
-  document.getElementById("popup").style.display="none";
-}
 
 </script>
 
