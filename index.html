@@ -9,8 +9,8 @@
 body {
   margin:0;
   font-family:'Segoe UI', sans-serif;
-  overflow:hidden;
   color:white;
+  overflow:hidden;
 }
 
 /* VIDEO */
@@ -27,122 +27,90 @@ video {
   position:fixed;
   width:100%;
   height:100%;
-  background:linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+  background:rgba(0,0,0,0.6);
 }
 
-/* CENTER */
-.center {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  text-align:center;
+/* LAYOUT */
+.container {
+  display:flex;
+  height:100vh;
 }
 
-/* 🔥 IMAGE (NOT CIRCLE) */
+/* LEFT (INFO) */
+.left {
+  width:30%;
+  padding:30px;
+  backdrop-filter: blur(15px);
+  background:rgba(20,20,20,0.6);
+}
+
+/* RIGHT */
+.right {
+  width:70%;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  padding:30px;
+}
+
+/* PROFILE */
 .profile {
-  width:220px;
-  height:260px;
+  width:160px;
+  height:200px;
   object-fit:cover;
-
-  border-radius:20px; /* مش دائرية */
-
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.6),
-    0 0 25px rgba(255,180,0,0.5);
-
-  transition:0.4s;
-}
-
-/* HOVER */
-.profile:hover {
-  transform:scale(1.05) translateY(-5px);
-  box-shadow:
-    0 15px 40px rgba(0,0,0,0.8),
-    0 0 40px rgba(255,140,0,0.7);
+  border-radius:15px;
+  box-shadow:0 0 25px rgba(255,140,0,0.6);
 }
 
 /* NAME */
 .name {
-  font-size:42px;
-  margin-top:15px;
-
-  background: linear-gradient(90deg,#ffcc70,#ff8c00);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  font-size:30px;
+  margin-top:10px;
+  color:#ffb347;
 }
 
-/* SUGGESTIONS */
-.suggestions {
-  margin-top:20px;
+/* QUESTIONS */
+.questions {
+  margin-top:40px;
+  width:250px;
 }
 
-.suggestions div {
-  margin:10px;
+.q {
+  margin:10px 0;
   padding:12px;
-  border-radius:12px;
   background:rgba(255,255,255,0.08);
+  border-radius:10px;
   cursor:pointer;
+  text-align:center;
   transition:0.2s;
 }
 
-.suggestions div:hover {
-  background:rgba(255,140,0,0.4);
-}
-
-/* CHAT BUTTON */
-.chat-btn {
-  position:fixed;
-  right:25px;
-  bottom:25px;
-  width:60px;
-  height:60px;
-  border-radius:50%;
+.q:hover {
   background:#ff8c00;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  cursor:pointer;
-  font-size:24px;
-  box-shadow:0 0 20px rgba(255,140,0,0.7);
-}
-
-/* CHAT BOX */
-.chat-box {
-  position:fixed;
-  right:25px;
-  bottom:25px;
-  width:350px;
-  height:480px;
-  display:none;
-
-  backdrop-filter: blur(15px);
-  background:rgba(20,20,20,0.8);
-  border-radius:15px;
-  padding:15px;
-}
-
-/* FULL MODE */
-.chat-box.full {
-  width:75%;
-  height:80%;
-  left:12%;
-  right:12%;
-  bottom:10%;
 }
 
 /* CHAT */
+.chat-box {
+  margin-top:auto;
+  width:300px;
+  height:350px;
+  background:rgba(20,20,20,0.7);
+  backdrop-filter: blur(15px);
+  border-radius:15px;
+  padding:10px;
+}
+
+/* CHAT AREA */
 #chat {
-  height:85%;
+  height:80%;
   overflow-y:auto;
 }
 
-/* BUBBLE */
+/* BUBBLES */
 .bubble {
   padding:10px;
   margin:10px;
   border-radius:10px;
-  max-width:70%;
 }
 
 .user {
@@ -161,8 +129,15 @@ input {
   padding:10px;
   border:none;
   border-radius:10px;
-  margin-top:10px;
-  outline:none;
+}
+
+/* LEFT INFO TEXT */
+.info h2 {
+  color:#ffb347;
+}
+
+.info p {
+  opacity:0.8;
 }
 
 </style>
@@ -170,51 +145,55 @@ input {
 
 <body>
 
-<!-- VIDEO -->
 <video autoplay muted loop>
   <source src="bg.mp4">
 </video>
 
 <div class="overlay"></div>
 
-<!-- CENTER -->
-<div class="center">
+<div class="container">
 
-<img src="me.png" class="profile">
+<!-- LEFT SIDE -->
+<div class="left">
+  <div class="info">
+    <h2>About Me</h2>
+    <p>AI Developer building intelligent systems and automation tools.</p>
 
-<div class="name">Alaa Falugi</div>
+    <h2>Skills</h2>
+    <p>Python, SQL, AI, Data Analytics</p>
 
-<div class="suggestions">
-  <div onclick="ask('who is alaa')">Who is Alaa?</div>
-  <div onclick="ask('projects')">Projects</div>
-  <div onclick="ask('skills')">Skills</div>
+    <h2>Goal</h2>
+    <p>Building powerful AI products and working globally.</p>
+  </div>
 </div>
 
+<!-- RIGHT SIDE -->
+<div class="right">
+
+  <!-- PROFILE -->
+  <img src="me.png" class="profile">
+  <div class="name">Alaa Falugi</div>
+
+  <!-- QUESTIONS -->
+  <div class="questions">
+    <div class="q" onclick="ask('who is alaa')">Who is Alaa?</div>
+    <div class="q" onclick="ask('projects')">Projects</div>
+    <div class="q" onclick="ask('skills')">Skills</div>
+    <div class="q" onclick="ask('experience')">Experience</div>
+    <div class="q" onclick="ask('goal')">Goals</div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chat-box">
+    <div id="chat"></div>
+    <input id="input" placeholder="Ask something...">
+  </div>
+
 </div>
-
-<!-- CHAT BUTTON -->
-<div class="chat-btn" onclick="toggleChat()">💬</div>
-
-<!-- CHAT -->
-<div class="chat-box" id="chatBox">
-
-<div id="chat"></div>
-
-<input id="input" placeholder="Ask something...">
 
 </div>
 
 <script>
-
-function toggleChat(){
-  let box=document.getElementById("chatBox");
-
-  if(box.style.display==="none" || box.style.display===""){
-    box.style.display="block";
-  } else {
-    box.classList.toggle("full");
-  }
-}
 
 function add(sender,text){
   let chat=document.getElementById("chat");
@@ -230,15 +209,16 @@ function add(sender,text){
 function reply(input){
   input=input.toLowerCase();
 
-  if(input.includes("who")) return "AI Developer building intelligent systems.";
-  if(input.includes("skills")) return "Python | SQL | AI";
-  if(input.includes("projects")) return "AI Email System + Analytics.";
+  if(input.includes("who")) return "AI Developer passionate about building real-world AI systems.";
+  if(input.includes("skills")) return "Python | SQL | AI | Data Analytics";
+  if(input.includes("projects")) return "AI Email System + Data Analytics.";
+  if(input.includes("experience")) return "Worked on AI systems and data projects.";
+  if(input.includes("goal")) return "Building global AI products.";
 
   return "Ask something else.";
 }
 
 function ask(q){
-  toggleChat();
   add("User",q);
   setTimeout(()=>add("AI",reply(q)),300);
 }
