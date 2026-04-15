@@ -8,38 +8,43 @@
 body {
   margin:0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+  background: radial-gradient(circle at top, #1a1a2e, #0f0c29);
   color:white;
   display:flex;
 }
 
-/* LEFT SIDEBAR */
+/* Glass Panels */
+.panel {
+  backdrop-filter: blur(15px);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* LEFT */
 .sidebar-left {
-  width:250px;
+  width:220px;
   height:100vh;
   padding:20px;
-  background:rgba(0,0,0,0.4);
 }
 
 .question {
   padding:10px;
   margin:10px 0;
-  border-radius:8px;
-  background:rgba(255,255,255,0.1);
+  border-radius:10px;
   cursor:pointer;
   transition:0.3s;
 }
 
 .question:hover {
-  background:#7f5af0;
+  background:rgba(255,255,255,0.1);
+  transform:translateX(5px);
 }
 
-/* RIGHT SIDEBAR */
+/* RIGHT */
 .sidebar-right {
-  width:250px;
+  width:220px;
   height:100vh;
   padding:20px;
-  background:rgba(0,0,0,0.4);
 }
 
 /* MAIN */
@@ -51,10 +56,27 @@ body {
 /* CHAT */
 #chat {
   height:400px;
-  background:rgba(0,0,0,0.5);
-  border-radius:10px;
+  border-radius:15px;
   padding:15px;
   overflow-y:auto;
+}
+
+/* CHAT BUBBLES */
+.bubble {
+  padding:10px;
+  border-radius:10px;
+  margin:10px 0;
+  max-width:70%;
+}
+
+.user {
+  background:#7f5af0;
+  margin-left:auto;
+}
+
+.ai {
+  background:#00d4ff;
+  color:black;
 }
 
 /* INPUT */
@@ -67,13 +89,12 @@ input {
   outline:none;
 }
 
-/* MESSAGE STYLE */
-.user {
-  color:#7f5af0;
-}
-
-.ai {
-  color:#00d4ff;
+/* TITLE */
+h1 {
+  text-align:center;
+  background: linear-gradient(90deg,#00d4ff,#7f5af0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 </style>
@@ -82,99 +103,78 @@ input {
 <body>
 
 <!-- LEFT -->
-<div class="sidebar-left">
-  <h3>💡 Ask Me</h3>
+<div class="sidebar-left panel">
+  <h3>💡 Ask</h3>
 
   <div class="question" onclick="ask('who is alaa')">Who is Alaa?</div>
   <div class="question" onclick="ask('projects')">Projects</div>
   <div class="question" onclick="ask('skills')">Skills</div>
-  <div class="question" onclick="ask('contact')">Contact</div>
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
-<h1>🚀 Alaa Portfolio</h1>
+<h1>Alaa Portfolio</h1>
 
-<div id="chat"></div>
+<div id="chat" class="panel"></div>
 
 <input id="input" placeholder="Ask something..." />
 
 </div>
 
 <!-- RIGHT -->
-<div class="sidebar-right">
-  <h3>✨ Suggestions</h3>
+<div class="sidebar-right panel">
+  <h3>✨ Explore</h3>
 
   <div class="question" onclick="ask('experience')">Experience</div>
-  <div class="question" onclick="ask('education')">Education</div>
   <div class="question" onclick="ask('goals')">Goals</div>
   <div class="question" onclick="ask('linkedin')">LinkedIn</div>
 </div>
 
 <script>
 
-// typing effect
-function typeText(text){
-  let chat=document.getElementById("chat");
-  let div=document.createElement("div");
-  div.className="ai";
-  chat.appendChild(div);
-
-  let i=0;
-  function typing(){
-    if(i<text.length){
-      div.innerHTML+=text[i];
-      i++;
-      chat.scrollTop=chat.scrollHeight;
-      setTimeout(typing,10);
-    }
-  }
-  typing();
-}
-
-// add message
+// bubbles
 function addMessage(sender,text){
   let chat=document.getElementById("chat");
   let div=document.createElement("div");
-  div.className = sender==="User" ? "user" : "ai";
-  div.innerHTML = "<b>"+sender+":</b> "+text;
+
+  div.className="bubble "+(sender==="User"?"user":"ai");
+  div.innerHTML=text;
+
   chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
 }
 
 // AI logic
 function smartReply(input){
   input=input.toLowerCase();
 
-  if(input.includes("who")) return "Alaa is an AI developer.";
+  if(input.includes("who")) return "AI developer building smart systems.";
   if(input.includes("projects")) return "AI Email System + Data Analytics.";
   if(input.includes("skills")) return "Python, SQL, AI.";
-  if(input.includes("contact")) return "Check LinkedIn.";
   if(input.includes("linkedin")) return "linkedin.com/in/alaa-zx-134829315";
-  if(input.includes("goals")) return "To become a top AI engineer.";
-  if(input.includes("experience")) return "Worked on AI and data projects.";
-  if(input.includes("education")) return "Studying AI.";
 
-  return "Try another question.";
+  return "Ask something else.";
 }
 
 // sidebar click
 function ask(q){
   addMessage("User",q);
   setTimeout(()=>{
-    typeText(smartReply(q));
-  },200);
+    addMessage("AI",smartReply(q));
+  },300);
 }
 
 // input
 document.getElementById("input").addEventListener("keydown",function(e){
   if(e.key==="Enter"){
     let input=this.value;
+
     addMessage("User",input);
 
     setTimeout(()=>{
-      typeText(smartReply(input));
-    },200);
+      addMessage("AI",smartReply(input));
+    },300);
 
     this.value="";
   }
@@ -182,7 +182,7 @@ document.getElementById("input").addEventListener("keydown",function(e){
 
 // welcome
 setTimeout(()=>{
-  typeText("Welcome to Alaa Portfolio 🚀");
+  addMessage("AI","Welcome to Alaa Portfolio 🚀");
 },1000);
 
 </script>
