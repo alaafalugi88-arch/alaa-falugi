@@ -5,67 +5,93 @@
 
 <style>
 
+/* RESET */
 body {
   margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top, #1a1a2e, #0f0c29);
-  color:white;
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+}
+
+/* VIDEO BACKGROUND */
+video {
+  position:fixed;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+}
+
+/* OVERLAY */
+.overlay {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  z-index:-1;
+}
+
+/* LOADING SCREEN */
+#loader {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  color:#00ffcc;
   display:flex;
-}
-
-/* Glass Panels */
-.panel {
-  backdrop-filter: blur(15px);
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-/* LEFT */
-.sidebar-left {
-  width:220px;
-  height:100vh;
-  padding:20px;
-}
-
-.question {
-  padding:10px;
-  margin:10px 0;
-  border-radius:10px;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.question:hover {
-  background:rgba(255,255,255,0.1);
-  transform:translateX(5px);
-}
-
-/* RIGHT */
-.sidebar-right {
-  width:220px;
-  height:100vh;
-  padding:20px;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  font-size:20px;
+  z-index:10;
 }
 
 /* MAIN */
-.main {
-  flex:1;
+.container {
+  display:none;
   padding:20px;
+  color:white;
+}
+
+/* TITLE */
+h1 {
+  text-align:center;
+  font-size:50px;
+  background:linear-gradient(90deg,#00d4ff,#7f5af0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* AVATAR */
+.avatar {
+  width:140px;
+  border-radius:50%;
+  display:block;
+  margin:auto;
+  box-shadow:0 0 50px #00d4ff;
+  animation: float 4s infinite ease-in-out;
+}
+
+/* FLOAT */
+@keyframes float {
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-15px);}
+  100%{transform:translateY(0);}
 }
 
 /* CHAT */
 #chat {
-  height:400px;
-  border-radius:15px;
-  padding:15px;
+  height:300px;
   overflow-y:auto;
+  background:rgba(0,0,0,0.6);
+  border-radius:15px;
+  padding:10px;
 }
 
-/* CHAT BUBBLES */
+/* BUBBLE */
 .bubble {
   padding:10px;
+  margin:10px;
   border-radius:10px;
-  margin:10px 0;
   max-width:70%;
 }
 
@@ -82,19 +108,10 @@ body {
 /* INPUT */
 input {
   width:100%;
-  padding:12px;
-  margin-top:10px;
+  padding:10px;
   border:none;
   border-radius:10px;
-  outline:none;
-}
-
-/* TITLE */
-h1 {
-  text-align:center;
-  background: linear-gradient(90deg,#00d4ff,#7f5af0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin-top:10px;
 }
 
 </style>
@@ -102,38 +119,47 @@ h1 {
 
 <body>
 
-<!-- LEFT -->
-<div class="sidebar-left panel">
-  <h3>💡 Ask</h3>
+<!-- VIDEO -->
+<video autoplay muted loop>
+  <source src="bg.mp4" type="video/mp4">
+</video>
 
-  <div class="question" onclick="ask('who is alaa')">Who is Alaa?</div>
-  <div class="question" onclick="ask('projects')">Projects</div>
-  <div class="question" onclick="ask('skills')">Skills</div>
+<div class="overlay"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <p>Initializing Alaa System...</p>
+  <p>Loading AI...</p>
 </div>
 
 <!-- MAIN -->
-<div class="main">
+<div class="container" id="main">
+
+<img src="me.jpg" class="avatar">
 
 <h1>Alaa Portfolio</h1>
 
-<div id="chat" class="panel"></div>
+<div id="chat"></div>
 
-<input id="input" placeholder="Ask something..." />
+<input id="input" placeholder="Ask anything..." />
 
-</div>
-
-<!-- RIGHT -->
-<div class="sidebar-right panel">
-  <h3>✨ Explore</h3>
-
-  <div class="question" onclick="ask('experience')">Experience</div>
-  <div class="question" onclick="ask('goals')">Goals</div>
-  <div class="question" onclick="ask('linkedin')">LinkedIn</div>
 </div>
 
 <script>
 
-// bubbles
+// SOUND
+function playSound(){
+  new Audio("https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3").play();
+}
+
+// LOADING
+setTimeout(()=>{
+  document.getElementById("loader").style.display="none";
+  document.getElementById("main").style.display="block";
+  welcome();
+},3000);
+
+// CHAT
 function addMessage(sender,text){
   let chat=document.getElementById("chat");
   let div=document.createElement("div");
@@ -145,34 +171,26 @@ function addMessage(sender,text){
   chat.scrollTop=chat.scrollHeight;
 }
 
-// AI logic
+// AI
 function smartReply(input){
   input=input.toLowerCase();
 
-  if(input.includes("who")) return "AI developer building smart systems.";
-  if(input.includes("projects")) return "AI Email System + Data Analytics.";
+  if(input.includes("who")) return "Alaa is an AI engineer.";
   if(input.includes("skills")) return "Python, SQL, AI.";
+  if(input.includes("projects")) return "AI Email + Data system.";
   if(input.includes("linkedin")) return "linkedin.com/in/alaa-zx-134829315";
 
-  return "Ask something else.";
+  return "Ask something interesting.";
 }
 
-// sidebar click
-function ask(q){
-  addMessage("User",q);
-  setTimeout(()=>{
-    addMessage("AI",smartReply(q));
-  },300);
-}
-
-// input
+// INPUT
 document.getElementById("input").addEventListener("keydown",function(e){
   if(e.key==="Enter"){
     let input=this.value;
-
     addMessage("User",input);
 
     setTimeout(()=>{
+      playSound();
       addMessage("AI",smartReply(input));
     },300);
 
@@ -180,10 +198,10 @@ document.getElementById("input").addEventListener("keydown",function(e){
   }
 });
 
-// welcome
-setTimeout(()=>{
-  addMessage("AI","Welcome to Alaa Portfolio 🚀");
-},1000);
+// WELCOME
+function welcome(){
+  addMessage("AI","Welcome to my AI Portfolio 🚀");
+}
 
 </script>
 
