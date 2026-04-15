@@ -27,7 +27,7 @@ video {
   position:fixed;
   width:100%;
   height:100%;
-  background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.4));
+  background:linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
 }
 
 /* CENTER */
@@ -43,7 +43,7 @@ video {
 .profile {
   width:140px;
   border-radius:50%;
-  box-shadow:0 0 30px rgba(0,212,255,0.6);
+  box-shadow:0 0 25px rgba(255,180,0,0.6);
   margin-bottom:15px;
 }
 
@@ -51,7 +51,7 @@ video {
 .name {
   font-size:42px;
   font-weight:bold;
-  background: linear-gradient(90deg,#4facfe,#a18cd1);
+  background: linear-gradient(90deg,#ffcc70,#ff8c00);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
@@ -65,13 +65,13 @@ video {
   margin:8px;
   padding:10px 15px;
   border-radius:12px;
-  background:rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.06);
   cursor:pointer;
   transition:0.2s;
 }
 
 .suggestions div:hover {
-  background:rgba(79,172,254,0.4);
+  background:rgba(255,180,0,0.4);
 }
 
 /* CHAT BUTTON */
@@ -82,13 +82,13 @@ video {
   width:55px;
   height:55px;
   border-radius:50%;
-  background:#4facfe;
+  background:#ff8c00;
   display:flex;
   justify-content:center;
   align-items:center;
   cursor:pointer;
   font-size:22px;
-  box-shadow:0 0 15px rgba(79,172,254,0.6);
+  box-shadow:0 0 15px rgba(255,140,0,0.7);
 }
 
 /* CHAT BOX */
@@ -101,7 +101,7 @@ video {
   display:none;
 
   backdrop-filter: blur(15px);
-  background:rgba(20,20,20,0.6);
+  background:rgba(20,20,20,0.7);
   border-radius:15px;
   padding:15px;
 }
@@ -130,12 +130,12 @@ video {
 }
 
 .user {
-  background:#a18cd1;
+  background:#ff8c00;
   margin-left:auto;
 }
 
 .ai {
-  background:#4facfe;
+  background:#ffcc70;
   color:black;
 }
 
@@ -190,7 +190,6 @@ input {
 
 <script>
 
-/* TOGGLE */
 function toggleChat(){
   let box=document.getElementById("chatBox");
 
@@ -201,7 +200,6 @@ function toggleChat(){
   }
 }
 
-/* MESSAGE */
 function add(sender,text){
   let chat=document.getElementById("chat");
   let div=document.createElement("div");
@@ -213,7 +211,6 @@ function add(sender,text){
   chat.scrollTop=chat.scrollHeight;
 }
 
-/* AI */
 function reply(input){
   input=input.toLowerCase();
 
@@ -224,14 +221,12 @@ function reply(input){
   return "Ask something else.";
 }
 
-/* ASK */
 function ask(q){
   toggleChat();
   add("User",q);
   setTimeout(()=>add("AI",reply(q)),300);
 }
 
-/* INPUT */
 document.getElementById("input").addEventListener("keydown",function(e){
   if(e.key==="Enter"){
     let val=this.value;
@@ -240,11 +235,6 @@ document.getElementById("input").addEventListener("keydown",function(e){
     this.value="";
   }
 });
-
-</script>
-
-</body>
-</html>
 
 </script>
 
