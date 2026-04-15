@@ -10,7 +10,7 @@
 body {
   margin:0;
   font-family:monospace;
-  background: linear-gradient(135deg,#000,#020d0d,#000);
+  background: radial-gradient(circle at top, #001111, black);
   color:#00ffcc;
   overflow:hidden;
 }
@@ -23,6 +23,17 @@ body {
   z-index:-1;
 }
 
+/* cursor glow */
+.cursor {
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  position:fixed;
+  background:#00ffcc;
+  pointer-events:none;
+  box-shadow:0 0 20px #00ffcc;
+}
+
 /* container */
 .container {
   width:900px;
@@ -32,7 +43,7 @@ body {
 }
 
 @keyframes fadeIn {
-  from {opacity:0; transform:translateY(20px);}
+  from {opacity:0; transform:translateY(30px);}
   to {opacity:1;}
 }
 
@@ -42,32 +53,33 @@ body {
 }
 
 .profile img {
-  width:120px;
+  width:130px;
   border-radius:50%;
   border:2px solid #00ffcc;
-  box-shadow:0 0 20px #00ffcc;
+  box-shadow:0 0 25px #00ffcc;
   transition:0.3s;
 }
 
 .profile img:hover {
-  transform:scale(1.1);
-  box-shadow:0 0 40px #00ffcc;
+  transform:scale(1.15);
+  box-shadow:0 0 60px #00ffcc;
 }
 
 /* cards */
 .card {
-  background:rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  background:rgba(0,0,0,0.5);
   border:1px solid #00ffcc;
   border-radius:10px;
   padding:20px;
   margin-top:20px;
-  box-shadow:0 0 15px #00ffcc;
+  box-shadow:0 0 20px #00ffcc;
   transition:0.3s;
 }
 
 .card:hover {
-  box-shadow:0 0 30px #00ffcc;
-  transform:translateY(-5px);
+  transform:translateY(-10px) scale(1.02);
+  box-shadow:0 0 50px #00ffcc;
 }
 
 /* chat */
@@ -102,19 +114,7 @@ button {
 button:hover {
   background:#00ffcc;
   color:black;
-  transform:scale(1.1);
-}
-
-/* skill bars */
-.skill-bar {
-  background:#111;
-  border:1px solid #00ffcc;
-  margin:5px 0;
-}
-
-.skill-fill {
-  background:#00ffcc;
-  height:10px;
+  transform:scale(1.2);
 }
 
 /* popup */
@@ -122,11 +122,15 @@ button:hover {
   position:fixed;
   top:50%;
   left:50%;
-  transform:translate(-50%,-50%);
+  transform:translate(-50%,-50%) scale(0);
   background:black;
   border:1px solid #00ffcc;
   padding:20px;
-  display:none;
+  transition:0.3s;
+}
+
+#popup.show {
+  transform:translate(-50%,-50%) scale(1);
 }
 
 </style>
@@ -135,24 +139,13 @@ button:hover {
 <body>
 
 <div id="tsparticles"></div>
+<div class="cursor" id="cursor"></div>
 
 <div class="container">
 
 <div class="profile">
   <img src="me.jpg">
   <h1>🚀 Alaa AI</h1>
-</div>
-
-<div class="card">
-  <h2>About Me</h2>
-  <p>AI developer building intelligent systems and automation tools.</p>
-</div>
-
-<div class="card">
-  <h2>Skills</h2>
-  Python<div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
-  SQL<div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
-  AI<div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
 </div>
 
 <div class="card">
@@ -165,14 +158,7 @@ button:hover {
     <button onclick="sendQuick('who is alaa')">Who is Alaa?</button>
     <button onclick="sendQuick('projects')">Projects</button>
     <button onclick="sendQuick('skills')">Skills</button>
-    <button onclick="sendQuick('contact')">Contact</button>
   </div>
-</div>
-
-<div class="card">
-  <h2>Contact</h2>
-  <p>GitHub: alaafalugi88-arch</p>
-  <p><a href="https://www.linkedin.com/in/alaa-zx-134829315/" target="_blank" style="color:#00ffcc;">LinkedIn</a></p>
 </div>
 
 </div>
@@ -184,17 +170,23 @@ button:hover {
 /* particles */
 tsParticles.load("tsparticles", {
   particles:{
-    number:{value:100},
+    number:{value:120},
     color:{value:"#00ffcc"},
     links:{enable:true,color:"#00ffcc"},
     move:{speed:1}
   }
 });
 
+/* cursor effect */
+document.addEventListener("mousemove", e=>{
+  let c=document.getElementById("cursor");
+  c.style.top=e.clientY+"px";
+  c.style.left=e.clientX+"px";
+});
+
 /* sound */
 function playSound(){
-  let audio=new Audio("https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3");
-  audio.play();
+  new Audio("https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3").play();
 }
 
 /* typing */
@@ -205,20 +197,18 @@ function typeText(text){
   chat.appendChild(div);
 
   let i=0;
-
   function typing(){
     if(i<text.length){
-      div.innerHTML+=text.charAt(i);
+      div.innerHTML+=text[i];
       i++;
       chat.scrollTop=chat.scrollHeight;
-      setTimeout(typing,15);
+      setTimeout(typing,10);
     }
   }
-
   typing();
 }
 
-/* message */
+/* messages */
 function addMessage(sender,text){
   let chat=document.getElementById("chat");
   let div=document.createElement("div");
@@ -230,12 +220,12 @@ function addMessage(sender,text){
 function smartReply(input){
   input=input.toLowerCase();
 
-  if(input.includes("who")) return "Alaa is an AI developer.";
-  if(input.includes("skills")) return "Python, SQL, AI.";
-  if(input.includes("contact")) return "Check LinkedIn.";
+  if(input.includes("who")) return "Alaa is building AI systems.";
+  if(input.includes("skills")) return "Python | SQL | AI";
+
   if(input.includes("projects")){
     showProjects();
-    return "Opening systems...";
+    return "Loading AI Systems...";
   }
 
   return "Try buttons.";
@@ -249,7 +239,7 @@ document.getElementById("input").addEventListener("keydown",function(e){
 
     setTimeout(()=>{
       typeText(smartReply(input));
-    },300);
+    },200);
 
     this.value="";
   }
@@ -260,7 +250,7 @@ function sendQuick(cmd){
   addMessage("User",cmd);
   setTimeout(()=>{
     typeText(smartReply(cmd));
-  },300);
+  },200);
 }
 
 /* popup */
@@ -274,11 +264,11 @@ function showProjects(){
   <button onclick="closePopup()">Close</button>
   `;
 
-  popup.style.display="block";
+  popup.classList.add("show");
 }
 
 function closePopup(){
-  document.getElementById("popup").style.display="none";
+  document.getElementById("popup").classList.remove("show");
 }
 
 /* welcome */
