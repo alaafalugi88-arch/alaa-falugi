@@ -3,171 +3,227 @@
 <head>
   <title>Alaa AI</title>
 
+  <!-- particles -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
   <style>
     body {
-      background: #0a0a0a;
+      margin: 0;
+      background: black;
       color: #00ffcc;
       font-family: monospace;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      overflow: hidden;
+    }
+
+    #tsparticles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
 
     .container {
       width: 500px;
-      background: #111;
+      margin: auto;
+      margin-top: 50px;
+      background: rgba(0,0,0,0.8);
       border: 1px solid #00ffcc;
       border-radius: 10px;
       box-shadow: 0 0 20px #00ffcc;
       padding: 20px;
     }
 
-    h2 {
-      text-align: center;
-      color: #00ffcc;
-    }
-
     #chat {
       height: 300px;
       overflow-y: auto;
-      border: 1px solid #00ffcc;
-      padding: 10px;
-      margin-bottom: 10px;
       background: #000;
+      padding: 10px;
+      border: 1px solid #00ffcc;
+      margin-bottom: 10px;
     }
 
-    .user {
-      color: #00ffff;
-    }
-
-    .ai {
-      color: #ff9900;
-    }
+    .user { color: cyan; }
+    .ai { color: orange; }
 
     input {
       width: 100%;
       padding: 10px;
-      background: #000;
+      background: black;
       border: 1px solid #00ffcc;
       color: #00ffcc;
     }
 
-    .boot {
-      font-size: 12px;
-      margin-bottom: 10px;
-      color: #888;
-    }
-
-    .commands {
+    .buttons {
       margin-top: 10px;
-      font-size: 12px;
-      color: #777;
       text-align: center;
     }
 
+    button {
+      background: black;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      padding: 5px 10px;
+      margin: 3px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #00ffcc;
+      color: black;
+    }
+
+    /* popup */
+    #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: black;
+      border: 1px solid #00ffcc;
+      padding: 20px;
+      display: none;
+      z-index: 10;
+    }
   </style>
 </head>
 
 <body>
 
+<div id="tsparticles"></div>
+
 <div class="container">
 
-  <h2>Alaa AI System</h2>
+<h2>Alaa AI System</h2>
 
-  <div class="boot" id="boot"></div>
+<div id="chat"></div>
 
-  <div id="chat"></div>
+<input id="input" placeholder="Ask the AI..." />
 
-  <input id="input" placeholder="Ask the AI..." />
-
-  <div class="commands">
-    help | projects | skills | about | contact
-  </div>
+<div class="buttons">
+  <button onclick="sendQuick('about')">About</button>
+  <button onclick="sendQuick('projects')">Projects</button>
+  <button onclick="sendQuick('skills')">Skills</button>
+  <button onclick="sendQuick('contact')">Contact</button>
+</div>
 
 </div>
 
+<div id="popup"></div>
+
 <script>
 
-// Boot animation
-let text = [
-  "Initializing AI...",
-  "Loading systems...",
-  "Connecting...",
-  "Ready ✔"
-];
-
-let i = 0;
-
-function typeLine() {
-  if (i < text.length) {
-    document.getElementById("boot").innerHTML += text[i] + "<br>";
-    i++;
-    setTimeout(typeLine, 600);
+// particles
+tsParticles.load("tsparticles", {
+  particles: {
+    number: { value: 60 },
+    color: { value: "#00ffcc" },
+    size: { value: 2 },
+    move: { speed: 1 },
+    links: { enable: true, color: "#00ffcc" }
   }
-}
+});
 
-typeLine();
-
-// Welcome message
-setTimeout(() => {
-  addMessage("AI", "Welcome to Alaa AI 🤖 Type 'help' to start.");
-}, 2500);
-
-// Add message function
-function addMessage(sender, message) {
+// typing effect
+function typeText(text, callback) {
+  let i = 0;
   let chat = document.getElementById("chat");
 
   let div = document.createElement("div");
-  div.innerHTML = `<span class="${sender === "User" ? "user" : "ai"}">${sender}:</span> ${message}`;
+  div.className = "ai";
+  chat.appendChild(div);
+
+  function typing() {
+    if (i < text.length) {
+      div.innerHTML += text.charAt(i);
+      i++;
+      chat.scrollTop = chat.scrollHeight;
+      setTimeout(typing, 20);
+    } else {
+      if (callback) callback();
+    }
+  }
+
+  typing();
+}
+
+// add message
+function addMessage(sender, text) {
+  let chat = document.getElementById("chat");
+
+  let div = document.createElement("div");
+  div.className = sender === "User" ? "user" : "ai";
+  div.innerHTML = sender + ": " + text;
 
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
 
-// Smart replies
+// smart replies
 function smartReply(input) {
   input = input.toLowerCase();
 
-  if (input.includes("help")) {
-    return "Commands: projects, skills, about, contact";
-  }
-
   if (input.includes("about")) {
-    return "Alaa is an AI developer building smart systems.";
-  }
-
-  if (input.includes("projects")) {
-    return "1. Email AI System\n2. Data Analytics Engine";
+    return "Alaa is an AI developer building intelligent systems.";
   }
 
   if (input.includes("skills")) {
-    return "Python | SQL | AI | Automation";
+    return "Python | SQL | AI | Data Analytics";
   }
 
   if (input.includes("contact")) {
     return "GitHub: alaafalugi88-arch";
   }
 
-  return "Unknown command. Type 'help'.";
+  if (input.includes("projects")) {
+    showProjects();
+    return "Opening projects...";
+  }
+
+  return "Try using the buttons above.";
 }
 
-// Input handler
+// quick buttons
+function sendQuick(cmd) {
+  addMessage("User", cmd);
+  typeText(smartReply(cmd));
+}
+
+// input
 document.getElementById("input").addEventListener("keydown", function(e){
   if(e.key === "Enter"){
     let input = this.value;
-
     addMessage("User", input);
 
-    let reply = smartReply(input);
-
     setTimeout(() => {
-      addMessage("AI", reply);
-    }, 400);
+      typeText(smartReply(input));
+    }, 300);
 
     this.value = "";
   }
 });
+
+// popup
+function showProjects() {
+  let popup = document.getElementById("popup");
+
+  popup.innerHTML = `
+    <h3>Projects</h3>
+    <p>Email AI System - Auto reply using Python</p>
+    <p>Data Analytics Engine - SQL & insights</p>
+    <button onclick="closePopup()">Close</button>
+  `;
+
+  popup.style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
+// welcome
+setTimeout(() => {
+  typeText("Welcome to Alaa AI 🤖");
+}, 1000);
 
 </script>
 
