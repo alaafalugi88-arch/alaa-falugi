@@ -10,6 +10,7 @@ body {
   margin:0;
   font-family:'Segoe UI', sans-serif;
   overflow:hidden;
+  color:white;
 }
 
 /* VIDEO */
@@ -21,89 +22,107 @@ video {
   z-index:-2;
 }
 
-/* OVERLAY (خففناه 🔥) */
+/* OVERLAY */
 .overlay {
   position:fixed;
   width:100%;
   height:100%;
-  background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+  background:rgba(0,0,0,0.5);
   z-index:-1;
 }
 
-/* CENTER BOX */
-.center-box {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:80%;
-  max-width:900px;
-  padding:30px;
-  border-radius:20px;
+/* LAYOUT */
+.container {
+  display:flex;
+  height:100vh;
+}
 
+/* SIDEBAR */
+.sidebar {
+  width:220px;
+  padding:20px;
+}
+
+/* GLASS */
+.glass {
   backdrop-filter: blur(20px);
-  background:rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.05);
+  border-radius:15px;
+  box-shadow:0 0 30px rgba(0,212,255,0.2);
+}
 
-  box-shadow:0 0 40px rgba(0,212,255,0.3);
+/* QUESTIONS */
+.q {
+  padding:10px;
+  margin:10px 0;
+  border-radius:10px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.q:hover {
+  background:rgba(127,90,240,0.5);
+  transform:translateX(5px);
+}
+
+/* CENTER */
+.main {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
 /* TITLE */
 .title {
-  text-align:center;
-  font-size:60px;
-  font-weight:bold;
+  font-size:50px;
+  margin-bottom:20px;
 
   background: linear-gradient(90deg,#00d4ff,#7f5af0);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-
-  animation: glow 3s infinite alternate;
 }
 
-@keyframes glow {
-  from {text-shadow:0 0 10px #00d4ff;}
-  to {text-shadow:0 0 30px #7f5af0;}
+/* CHAT BOX */
+.chat-box {
+  width:70%;
+  max-width:800px;
+  padding:20px;
+}
+
+/* CHAT */
+#chat {
+  height:300px;
+  overflow-y:auto;
+}
+
+/* BUBBLE */
+.bubble {
+  padding:10px;
+  margin:10px;
+  border-radius:10px;
+  max-width:70%;
+}
+
+.user {
+  background:#7f5af0;
+  margin-left:auto;
+}
+
+.ai {
+  background:#00d4ff;
+  color:black;
 }
 
 /* INPUT */
 input {
   width:100%;
-  padding:15px;
-  margin-top:20px;
+  padding:12px;
   border:none;
   border-radius:10px;
+  margin-top:10px;
   outline:none;
-  font-size:16px;
-}
-
-/* BUTTON */
-button {
-  margin-top:15px;
-  padding:10px 20px;
-  border:none;
-  border-radius:10px;
-  background:#7f5af0;
-  color:white;
-  cursor:pointer;
-  display:block;
-  margin-left:auto;
-  margin-right:auto;
-  transition:0.3s;
-}
-
-button:hover {
-  transform:scale(1.1);
-  box-shadow:0 0 20px #7f5af0;
-}
-
-/* TOP NAME */
-.logo {
-  position:absolute;
-  top:20px;
-  left:30px;
-  color:white;
-  font-size:18px;
-  opacity:0.7;
 }
 
 </style>
@@ -118,15 +137,95 @@ button:hover {
 
 <div class="overlay"></div>
 
-<div class="logo">Alaa Portfolio</div>
+<div class="container">
 
-<div class="center-box">
+<!-- LEFT -->
+<div class="sidebar">
+  <div class="glass">
+    <h3>Ask</h3>
 
-  <h1 class="title">Alaa Falugi</h1>
+    <div class="q" onclick="ask('who is alaa')">Who is Alaa?</div>
+    <div class="q" onclick="ask('projects')">Projects</div>
+    <div class="q" onclick="ask('skills')">Skills</div>
+  </div>
+</div>
 
-  <input placeholder="Ask something..." />
+<!-- CENTER -->
+<div class="main">
 
-  <button>Enter</button>
+<h1 class="title">Alaa Falugi</h1>
+
+<div class="chat-box glass">
+
+<div id="chat"></div>
+
+<input id="input" placeholder="Ask something..." />
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+<div class="sidebar">
+  <div class="glass">
+    <h3>Explore</h3>
+
+    <div class="q" onclick="ask('experience')">Experience</div>
+    <div class="q" onclick="ask('goals')">Goals</div>
+    <div class="q" onclick="ask('linkedin')">LinkedIn</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+
+/* MESSAGE */
+function add(sender,text){
+  let chat=document.getElementById("chat");
+  let div=document.createElement("div");
+
+  div.className="bubble "+(sender==="User"?"user":"ai");
+  div.innerHTML=text;
+
+  chat.appendChild(div);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+/* AI */
+function reply(input){
+  input=input.toLowerCase();
+
+  if(input.includes("who")) return "AI Developer building intelligent systems.";
+  if(input.includes("skills")) return "Python | SQL | AI";
+  if(input.includes("projects")) return "AI Email System + Analytics.";
+  if(input.includes("linkedin")) return "linkedin.com/in/alaa-zx-134829315";
+
+  return "Try another question.";
+}
+
+/* CLICK */
+function ask(q){
+  add("User",q);
+  setTimeout(()=>add("AI",reply(q)),300);
+}
+
+/* INPUT */
+document.getElementById("input").addEventListener("keydown",function(e){
+  if(e.key==="Enter"){
+    let val=this.value;
+
+    add("User",val);
+    setTimeout(()=>add("AI",reply(val)),300);
+
+    this.value="";
+  }
+});
+
+</script>
+
+</body>
+</html>
 
 </div>
 
