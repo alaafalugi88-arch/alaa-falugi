@@ -5,14 +5,14 @@
 
 <style>
 
-/* RESET */
+/* BODY */
 body {
   margin:0;
   font-family:'Segoe UI', sans-serif;
   overflow:hidden;
 }
 
-/* VIDEO BACKGROUND */
+/* VIDEO */
 video {
   position:fixed;
   width:100%;
@@ -21,118 +21,89 @@ video {
   z-index:-2;
 }
 
-/* OVERLAY */
+/* OVERLAY (خففناه 🔥) */
 .overlay {
   position:fixed;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.7);
+  background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
   z-index:-1;
 }
 
-/* INTRO SCREEN */
-#intro {
-  position:fixed;
-  width:100%;
-  height:100%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  color:white;
-  z-index:5;
+/* CENTER BOX */
+.center-box {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:80%;
+  max-width:900px;
+  padding:30px;
+  border-radius:20px;
+
+  backdrop-filter: blur(20px);
+  background:rgba(255,255,255,0.05);
+
+  box-shadow:0 0 40px rgba(0,212,255,0.3);
 }
 
+/* TITLE */
 .title {
+  text-align:center;
   font-size:60px;
+  font-weight:bold;
+
   background: linear-gradient(90deg,#00d4ff,#7f5af0);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:fadeUp 2s ease;
+
+  animation: glow 3s infinite alternate;
 }
 
-.enter-btn {
-  margin-top:20px;
-  padding:10px 20px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  background:#7f5af0;
-  color:white;
-  font-size:18px;
-}
-
-/* MAIN LAYOUT */
-.container {
-  display:none;
-  display:flex;
-}
-
-/* SIDEBARS */
-.sidebar {
-  width:220px;
-  height:100vh;
-  padding:20px;
-  background:rgba(0,0,0,0.5);
-}
-
-.question {
-  padding:10px;
-  margin:10px 0;
-  cursor:pointer;
-  border-radius:10px;
-}
-
-.question:hover {
-  background:#7f5af0;
-}
-
-/* MAIN */
-.main {
-  flex:1;
-  padding:20px;
-  color:white;
-}
-
-/* CHAT */
-#chat {
-  height:400px;
-  background:rgba(0,0,0,0.6);
-  border-radius:10px;
-  padding:10px;
-  overflow-y:auto;
-}
-
-/* BUBBLE */
-.bubble {
-  padding:10px;
-  margin:10px;
-  border-radius:10px;
-  max-width:70%;
-}
-
-.user {
-  background:#7f5af0;
-  margin-left:auto;
-}
-
-.ai {
-  background:#00d4ff;
-  color:black;
+@keyframes glow {
+  from {text-shadow:0 0 10px #00d4ff;}
+  to {text-shadow:0 0 30px #7f5af0;}
 }
 
 /* INPUT */
 input {
   width:100%;
-  padding:10px;
-  margin-top:10px;
+  padding:15px;
+  margin-top:20px;
   border:none;
   border-radius:10px;
+  outline:none;
+  font-size:16px;
 }
 
-@keyframes fadeUp {
-  from {opacity:0; transform:translateY(40px);}
-  to {opacity:1;}
+/* BUTTON */
+button {
+  margin-top:15px;
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
+  background:#7f5af0;
+  color:white;
+  cursor:pointer;
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+  transition:0.3s;
+}
+
+button:hover {
+  transform:scale(1.1);
+  box-shadow:0 0 20px #7f5af0;
+}
+
+/* TOP NAME */
+.logo {
+  position:absolute;
+  top:20px;
+  left:30px;
+  color:white;
+  font-size:18px;
+  opacity:0.7;
 }
 
 </style>
@@ -147,100 +118,17 @@ input {
 
 <div class="overlay"></div>
 
-<!-- INTRO -->
-<div id="intro">
+<div class="logo">Alaa Portfolio</div>
+
+<div class="center-box">
+
   <h1 class="title">Alaa Falugi</h1>
-  <button class="enter-btn" onclick="enterSite()">Enter</button>
-</div>
 
-<!-- MAIN -->
-<div class="container" id="main">
+  <input placeholder="Ask something..." />
 
-<!-- LEFT -->
-<div class="sidebar">
-  <h3>Ask</h3>
-  <div class="question" onclick="ask('who is alaa')">Who is Alaa?</div>
-  <div class="question" onclick="ask('projects')">Projects</div>
-  <div class="question" onclick="ask('skills')">Skills</div>
-</div>
-
-<!-- CENTER -->
-<div class="main">
-
-<h2>Alaa Portfolio</h2>
-
-<div id="chat"></div>
-
-<input id="input" placeholder="Ask something..." />
+  <button>Enter</button>
 
 </div>
-
-<!-- RIGHT -->
-<div class="sidebar">
-  <h3>Explore</h3>
-  <div class="question" onclick="ask('experience')">Experience</div>
-  <div class="question" onclick="ask('goals')">Goals</div>
-  <div class="question" onclick="ask('linkedin')">LinkedIn</div>
-</div>
-
-</div>
-
-<script>
-
-/* ENTER */
-function enterSite(){
-  document.getElementById("intro").style.display="none";
-  document.getElementById("main").style.display="flex";
-}
-
-/* MESSAGE */
-function addMessage(sender,text){
-  let chat=document.getElementById("chat");
-  let div=document.createElement("div");
-
-  div.className="bubble "+(sender==="User"?"user":"ai");
-  div.innerHTML=text;
-
-  chat.appendChild(div);
-  chat.scrollTop=chat.scrollHeight;
-}
-
-/* AI */
-function smartReply(input){
-  input=input.toLowerCase();
-
-  if(input.includes("who")) return "Alaa is an AI engineer.";
-  if(input.includes("skills")) return "Python, SQL, AI.";
-  if(input.includes("projects")) return "AI Email + Data system.";
-  if(input.includes("linkedin")) return "linkedin.com/in/alaa-zx-134829315";
-
-  return "Ask something else.";
-}
-
-/* CLICK */
-function ask(q){
-  addMessage("User",q);
-  setTimeout(()=>{
-    addMessage("AI",smartReply(q));
-  },300);
-}
-
-/* INPUT */
-document.getElementById("input").addEventListener("keydown",function(e){
-  if(e.key==="Enter"){
-    let input=this.value;
-
-    addMessage("User",input);
-
-    setTimeout(()=>{
-      addMessage("AI",smartReply(input));
-    },300);
-
-    this.value="";
-  }
-});
-
-</script>
 
 </body>
 </html>
