@@ -1,67 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Alaa AI</title>
-
-<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+<title>Alaa Portfolio</title>
 
 <style>
 
 body {
   margin:0;
-  font-family:monospace;
-  background:black;
-  color:#00ffcc;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+  color:white;
   display:flex;
 }
 
-/* sidebar */
-.sidebar {
+/* LEFT SIDEBAR */
+.sidebar-left {
   width:250px;
   height:100vh;
-  background:#050505;
-  border-right:1px solid #00ffcc;
   padding:20px;
-}
-
-.sidebar h3 {
-  margin-bottom:10px;
+  background:rgba(0,0,0,0.4);
 }
 
 .question {
+  padding:10px;
   margin:10px 0;
-  padding:8px;
-  border:1px solid #00ffcc;
+  border-radius:8px;
+  background:rgba(255,255,255,0.1);
   cursor:pointer;
   transition:0.3s;
 }
 
 .question:hover {
-  background:#00ffcc;
-  color:black;
-  transform:scale(1.05);
+  background:#7f5af0;
 }
 
-/* main */
+/* RIGHT SIDEBAR */
+.sidebar-right {
+  width:250px;
+  height:100vh;
+  padding:20px;
+  background:rgba(0,0,0,0.4);
+}
+
+/* MAIN */
 .main {
   flex:1;
   padding:20px;
 }
 
-/* chat */
+/* CHAT */
 #chat {
-  height:300px;
-  border:1px solid #00ffcc;
-  padding:10px;
+  height:400px;
+  background:rgba(0,0,0,0.5);
+  border-radius:10px;
+  padding:15px;
   overflow-y:auto;
 }
 
+/* INPUT */
 input {
   width:100%;
-  padding:10px;
-  background:black;
-  border:1px solid #00ffcc;
-  color:#00ffcc;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  outline:none;
+}
+
+/* MESSAGE STYLE */
+.user {
+  color:#7f5af0;
+}
+
+.ai {
+  color:#00d4ff;
 }
 
 </style>
@@ -69,33 +81,44 @@ input {
 
 <body>
 
-<div class="sidebar">
+<!-- LEFT -->
+<div class="sidebar-left">
+  <h3>💡 Ask Me</h3>
 
-<h3>💡 Ask AI</h3>
-
-<div class="question" onclick="ask('who is alaa')">Who is Alaa?</div>
-<div class="question" onclick="ask('projects')">Projects</div>
-<div class="question" onclick="ask('skills')">Skills</div>
-<div class="question" onclick="ask('contact')">Contact</div>
-
+  <div class="question" onclick="ask('who is alaa')">Who is Alaa?</div>
+  <div class="question" onclick="ask('projects')">Projects</div>
+  <div class="question" onclick="ask('skills')">Skills</div>
+  <div class="question" onclick="ask('contact')">Contact</div>
 </div>
 
+<!-- MAIN -->
 <div class="main">
 
-<h1>🚀 Alaa AI System</h1>
+<h1>🚀 Alaa Portfolio</h1>
 
 <div id="chat"></div>
 
-<input id="input" placeholder="Ask anything..." />
+<input id="input" placeholder="Ask something..." />
 
+</div>
+
+<!-- RIGHT -->
+<div class="sidebar-right">
+  <h3>✨ Suggestions</h3>
+
+  <div class="question" onclick="ask('experience')">Experience</div>
+  <div class="question" onclick="ask('education')">Education</div>
+  <div class="question" onclick="ask('goals')">Goals</div>
+  <div class="question" onclick="ask('linkedin')">LinkedIn</div>
 </div>
 
 <script>
 
-// typing
+// typing effect
 function typeText(text){
   let chat=document.getElementById("chat");
   let div=document.createElement("div");
+  div.className="ai";
   chat.appendChild(div);
 
   let i=0;
@@ -114,7 +137,8 @@ function typeText(text){
 function addMessage(sender,text){
   let chat=document.getElementById("chat");
   let div=document.createElement("div");
-  div.innerHTML="<b>"+sender+":</b> "+text;
+  div.className = sender==="User" ? "user" : "ai";
+  div.innerHTML = "<b>"+sender+":</b> "+text;
   chat.appendChild(div);
 }
 
@@ -123,16 +147,20 @@ function smartReply(input){
   input=input.toLowerCase();
 
   if(input.includes("who")) return "Alaa is an AI developer.";
-  if(input.includes("skills")) return "Python | SQL | AI";
-  if(input.includes("contact")) return "LinkedIn available.";
-  if(input.includes("projects")) return "AI Email system + Data analytics.";
+  if(input.includes("projects")) return "AI Email System + Data Analytics.";
+  if(input.includes("skills")) return "Python, SQL, AI.";
+  if(input.includes("contact")) return "Check LinkedIn.";
+  if(input.includes("linkedin")) return "linkedin.com/in/alaa-zx-134829315";
+  if(input.includes("goals")) return "To become a top AI engineer.";
+  if(input.includes("experience")) return "Worked on AI and data projects.";
+  if(input.includes("education")) return "Studying AI.";
 
   return "Try another question.";
 }
 
 // sidebar click
 function ask(q){
-  addMessage("User", q);
+  addMessage("User",q);
   setTimeout(()=>{
     typeText(smartReply(q));
   },200);
@@ -154,7 +182,7 @@ document.getElementById("input").addEventListener("keydown",function(e){
 
 // welcome
 setTimeout(()=>{
-  typeText("Welcome to Alaa AI 🤖");
+  typeText("Welcome to Alaa Portfolio 🚀");
 },1000);
 
 </script>
