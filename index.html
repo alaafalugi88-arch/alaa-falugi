@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alaa AI</title>
+</head>
+
+<body style="background:black; color:lime; font-family:monospace;">
+
+  <div id="boot"></div>
+
+  <div id="chat" style="margin-top:20px;"></div>
+
+  <input id="input" placeholder="Ask the AI..." style="width:100%; padding:10px; background:black; color:lime; border:1px solid lime;" />
+
+<script>
+
+let text = [
+  "Initializing AI System...",
+  "Loading Neural Network...",
+  "Connecting to Intelligence Core...",
+  "Welcome to Alaa AI 👁️"
+];
+
+let i = 0;
+
+function typeLine() {
+  if (i < text.length) {
+    document.getElementById("boot").innerHTML += text[i] + "<br>";
+    i++;
+    setTimeout(typeLine, 1000);
+  }
+}
+
+typeLine();
+
+function smartReply(input) {
+  input = input.toLowerCase();
+
+  if (input.includes("who")) {
+    return "I am Alaa AI — an intelligent system.";
+  }
+
+  if (input.includes("project")) {
+    return "Email Auto Reply AI system built using Python.";
+  }
+
+  if (input.includes("skills")) {
+    return "Python, SQL, AI, Data Analytics.";
+  }
+
+  return "Processing... try asking about projects or skills.";
+}
+
+document.getElementById("input").addEventListener("keydown", function(e){
+  if(e.key === "Enter"){
+    let input = this.value;
+    let reply = smartReply(input);
+
+    document.getElementById("chat").innerHTML += 
+      "<br>> " + input + "<br>" + reply + "<br>";
+
+    this.value = "";
+  }
+});
+
+</script>
+
+</body>
+</html>
