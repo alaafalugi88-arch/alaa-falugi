@@ -39,18 +39,34 @@ video {
   text-align:center;
 }
 
-/* IMAGE */
+/* 🔥 IMAGE (NOT CIRCLE) */
 .profile {
-  width:140px;
-  border-radius:50%;
-  box-shadow:0 0 25px rgba(255,180,0,0.6);
-  margin-bottom:15px;
+  width:220px;
+  height:260px;
+  object-fit:cover;
+
+  border-radius:20px; /* مش دائرية */
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.6),
+    0 0 25px rgba(255,180,0,0.5);
+
+  transition:0.4s;
+}
+
+/* HOVER */
+.profile:hover {
+  transform:scale(1.05) translateY(-5px);
+  box-shadow:
+    0 15px 40px rgba(0,0,0,0.8),
+    0 0 40px rgba(255,140,0,0.7);
 }
 
 /* NAME */
 .name {
   font-size:42px;
-  font-weight:bold;
+  margin-top:15px;
+
   background: linear-gradient(90deg,#ffcc70,#ff8c00);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
@@ -62,46 +78,46 @@ video {
 }
 
 .suggestions div {
-  margin:8px;
-  padding:10px 15px;
+  margin:10px;
+  padding:12px;
   border-radius:12px;
-  background:rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.08);
   cursor:pointer;
   transition:0.2s;
 }
 
 .suggestions div:hover {
-  background:rgba(255,180,0,0.4);
+  background:rgba(255,140,0,0.4);
 }
 
 /* CHAT BUTTON */
 .chat-btn {
   position:fixed;
-  right:20px;
-  bottom:20px;
-  width:55px;
-  height:55px;
+  right:25px;
+  bottom:25px;
+  width:60px;
+  height:60px;
   border-radius:50%;
   background:#ff8c00;
   display:flex;
   justify-content:center;
   align-items:center;
   cursor:pointer;
-  font-size:22px;
-  box-shadow:0 0 15px rgba(255,140,0,0.7);
+  font-size:24px;
+  box-shadow:0 0 20px rgba(255,140,0,0.7);
 }
 
 /* CHAT BOX */
 .chat-box {
   position:fixed;
-  right:20px;
-  bottom:20px;
+  right:25px;
+  bottom:25px;
   width:350px;
   height:480px;
   display:none;
 
   backdrop-filter: blur(15px);
-  background:rgba(20,20,20,0.7);
+  background:rgba(20,20,20,0.8);
   border-radius:15px;
   padding:15px;
 }
@@ -164,7 +180,7 @@ input {
 <!-- CENTER -->
 <div class="center">
 
-<img src="me.jpeg" class="profile">
+<img src="me.png" class="profile">
 
 <div class="name">Alaa Falugi</div>
 
