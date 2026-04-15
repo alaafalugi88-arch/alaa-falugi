@@ -4,8 +4,6 @@
 <title>Alaa Portfolio</title>
 
 <style>
-
-/* BODY */
 body {
   margin:0;
   font-family:'Segoe UI', sans-serif;
@@ -22,7 +20,6 @@ video {
   z-index:-2;
 }
 
-/* OVERLAY */
 .overlay {
   position:fixed;
   width:100%;
@@ -36,7 +33,7 @@ video {
   height:100vh;
 }
 
-/* LEFT (INFO) */
+/* LEFT */
 .left {
   width:30%;
   padding:30px;
@@ -57,9 +54,10 @@ video {
 .profile {
   width:160px;
   height:200px;
-  object-fit:cover;
   border-radius:15px;
-  box-shadow:0 0 25px rgba(255,140,0,0.6);
+  opacity:0;
+  transform:scale(0.8);
+  animation:fadeIn 1s forwards;
 }
 
 /* NAME */
@@ -67,6 +65,8 @@ video {
   font-size:30px;
   margin-top:10px;
   color:#ffb347;
+  opacity:0;
+  animation:fadeIn 1.5s forwards;
 }
 
 /* QUESTIONS */
@@ -82,7 +82,8 @@ video {
   border-radius:10px;
   cursor:pointer;
   text-align:center;
-  transition:0.2s;
+  opacity:0;
+  animation:slideIn 1s forwards;
 }
 
 .q:hover {
@@ -100,28 +101,20 @@ video {
   padding:10px;
 }
 
-/* CHAT AREA */
 #chat {
   height:80%;
   overflow-y:auto;
 }
 
-/* BUBBLES */
+/* BUBBLE */
 .bubble {
   padding:10px;
   margin:10px;
   border-radius:10px;
 }
 
-.user {
-  background:#ff8c00;
-  margin-left:auto;
-}
-
-.ai {
-  background:#ffcc70;
-  color:black;
-}
+.user { background:#ff8c00; margin-left:auto; }
+.ai { background:#ffcc70; color:black; }
 
 /* INPUT */
 input {
@@ -131,15 +124,26 @@ input {
   border-radius:10px;
 }
 
-/* LEFT INFO TEXT */
-.info h2 {
-  color:#ffb347;
+/* POPUP */
+.popup {
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:#111;
+  padding:20px;
+  border-radius:15px;
+  display:none;
 }
 
-.info p {
-  opacity:0.8;
+/* ANIMATIONS */
+@keyframes fadeIn {
+  to {opacity:1; transform:scale(1);}
 }
 
+@keyframes slideIn {
+  to {opacity:1; transform:translateY(0);}
+}
 </style>
 </head>
 
@@ -153,84 +157,104 @@ input {
 
 <div class="container">
 
-<!-- LEFT SIDE -->
+<!-- LEFT -->
 <div class="left">
-  <div class="info">
-    <h2>About Me</h2>
-    <p>AI Developer building intelligent systems and automation tools.</p>
-
-    <h2>Skills</h2>
-    <p>Python, SQL, AI, Data Analytics</p>
-
-    <h2>Goal</h2>
-    <p>Building powerful AI products and working globally.</p>
-  </div>
+  <h2>About Me</h2>
+  <p>AI Developer building intelligent systems.</p>
 </div>
 
-<!-- RIGHT SIDE -->
+<!-- RIGHT -->
 <div class="right">
 
-  <!-- PROFILE -->
-  <img src="me.png" class="profile">
-  <div class="name">Alaa Falugi</div>
+<img src="me.png" class="profile">
+<div class="name">Alaa Falugi</div>
 
-  <!-- QUESTIONS -->
-  <div class="questions">
-    <div class="q" onclick="ask('who is alaa')">Who is Alaa?</div>
-    <div class="q" onclick="ask('projects')">Projects</div>
-    <div class="q" onclick="ask('skills')">Skills</div>
-    <div class="q" onclick="ask('experience')">Experience</div>
-    <div class="q" onclick="ask('goal')">Goals</div>
-  </div>
+<div class="questions">
+  <div class="q" onclick="ask('who')">Who is Alaa?</div>
+  <div class="q" onclick="openProjects()">Projects</div>
+  <div class="q" onclick="ask('skills')">Skills</div>
+</div>
 
-  <!-- CHAT -->
-  <div class="chat-box">
-    <div id="chat"></div>
-    <input id="input" placeholder="Ask something...">
-  </div>
+<div class="chat-box">
+  <div id="chat"></div>
+  <input id="input" placeholder="Ask something...">
+</div>
 
 </div>
 
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <h2>Projects</h2>
+  <p>AI Email System + Data Analytics</p>
+  <button onclick="closePopup()">Close</button>
 </div>
 
 <script>
 
+/* SOUND */
+let clickSound = new Audio('click.mp3');
+
+/* ADD MESSAGE */
 function add(sender,text){
   let chat=document.getElementById("chat");
   let div=document.createElement("div");
 
   div.className="bubble "+(sender==="User"?"user":"ai");
-  div.innerHTML=text;
-
   chat.appendChild(div);
-  chat.scrollTop=chat.scrollHeight;
+
+  typeText(div,text);
 }
 
+/* TYPING EFFECT */
+function typeText(el,text){
+  let i=0;
+  function typing(){
+    if(i<text.length){
+      el.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing,30);
+    }
+  }
+  typing();
+}
+
+/* AI PERSONA */
 function reply(input){
   input=input.toLowerCase();
 
-  if(input.includes("who")) return "AI Developer passionate about building real-world AI systems.";
-  if(input.includes("skills")) return "Python | SQL | AI | Data Analytics";
-  if(input.includes("projects")) return "AI Email System + Data Analytics.";
-  if(input.includes("experience")) return "Worked on AI systems and data projects.";
-  if(input.includes("goal")) return "Building global AI products.";
+  if(input.includes("who")) return "أنا علاء، مطور ذكاء اصطناعي بحب أبني أنظمة قوية.";
+  if(input.includes("skills")) return "أنا بشتغل Python, SQL, AI بشكل احترافي.";
+  if(input.includes("projects")) return "عندي مشاريع زي AI Email System.";
 
-  return "Ask something else.";
+  return "جرب تسأل بطريقة ثانية 😉";
 }
 
+/* ASK */
 function ask(q){
+  clickSound.play();
   add("User",q);
-  setTimeout(()=>add("AI",reply(q)),300);
+  setTimeout(()=>add("AI",reply(q)),400);
 }
 
+/* INPUT */
 document.getElementById("input").addEventListener("keydown",function(e){
   if(e.key==="Enter"){
     let val=this.value;
-    add("User",val);
-    setTimeout(()=>add("AI",reply(val)),300);
+    ask(val);
     this.value="";
   }
 });
+
+/* POPUP */
+function openProjects(){
+  document.getElementById("popup").style.display="block";
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
 
 </script>
 
