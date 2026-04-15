@@ -4,21 +4,29 @@
   <title>Alaa AI</title>
 </head>
 
-<body style="background:black; color:lime; font-family:monospace;">
+<body style="background:black; color:lime; font-family:monospace; text-shadow:0 0 5px lime; padding:20px;">
 
-  <div id="boot"></div>
+<h2 style="color:lime;">Alaa AI System v1.0</h2>
 
-  <div id="chat" style="margin-top:20px;"></div>
+<div id="boot"></div>
 
-  <input id="input" placeholder="Ask the AI..." style="width:100%; padding:10px; background:black; color:lime; border:1px solid lime;" />
+<div id="chat" style="margin-top:20px;"></div>
+
+<input id="input" placeholder="Ask the AI..." 
+style="width:100%; padding:10px; background:black; color:lime; border:1px solid lime;" />
+
+<p style="margin-top:10px;">
+Commands: help | projects | skills | about | contact
+</p>
 
 <script>
 
+// Boot messages
 let text = [
   "Initializing AI System...",
   "Loading Neural Network...",
   "Connecting to Intelligence Core...",
-  "Welcome to Alaa Portfolio "
+  "Welcome to Alaa AI 👁️"
 ];
 
 let i = 0;
@@ -27,41 +35,63 @@ function typeLine() {
   if (i < text.length) {
     document.getElementById("boot").innerHTML += text[i] + "<br>";
     i++;
-    setTimeout(typeLine, 1000);
+    setTimeout(typeLine, 800);
   }
 }
 
 typeLine();
 
+// Auto welcome message
+setTimeout(() => {
+  document.getElementById("chat").innerHTML += 
+    "<br><span style='color:orange'>AI:</span> Hello, I am Alaa AI 🤖<br>Type 'help' to begin.<br>";
+}, 4000);
+
+// Smart replies
 function smartReply(input) {
   input = input.toLowerCase();
 
-  if (input.includes("who")) {
-    return "I am Alaa AI — an intelligent system.";
+  if (input.includes("help")) {
+    return "Available commands: projects, skills, about, contact";
   }
 
-  if (input.includes("project")) {
-    return "Email Auto Reply AI system built using Python.";
+  if (input.includes("about")) {
+    return "Alaa is an AI developer building intelligent automation systems.";
+  }
+
+  if (input.includes("projects")) {
+    return "Loading modules...\n1. Email AI System\n2. Data Analytics Engine";
   }
 
   if (input.includes("skills")) {
-    return "Python, SQL, AI, Data Analytics.";
+    return "Python | SQL | AI | Automation | Data Analysis";
   }
 
-  return "Processing... try asking about projects or skills.";
+  if (input.includes("contact")) {
+    return "GitHub: alaafalugi88-arch";
+  }
+
+  return "Command not recognized. Type 'help'.";
 }
 
+// Chat system
 document.getElementById("input").addEventListener("keydown", function(e){
   if(e.key === "Enter"){
     let input = this.value;
     let reply = smartReply(input);
 
     document.getElementById("chat").innerHTML += 
-      "<br>> " + input + "<br>" + reply + "<br>";
+      "<br><span style='color:cyan'>User:</span> " + input +
+      "<br><span style='color:orange'>AI:</span> " + reply + "<br>";
 
     this.value = "";
   }
 });
+
+</script>
+
+</body>
+</html>
 
 </script>
 
