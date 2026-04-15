@@ -8,7 +8,7 @@
 /* RESET */
 body {
   margin:0;
-  font-family:'Segoe UI',sans-serif;
+  font-family:'Segoe UI', sans-serif;
   overflow:hidden;
 }
 
@@ -30,61 +30,77 @@ video {
   z-index:-1;
 }
 
-/* LOADING SCREEN */
-#loader {
+/* INTRO SCREEN */
+#intro {
   position:fixed;
   width:100%;
   height:100%;
-  background:black;
-  color:#00ffcc;
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  font-size:20px;
-  z-index:10;
+  color:white;
+  z-index:5;
+}
+
+.title {
+  font-size:60px;
+  background: linear-gradient(90deg,#00d4ff,#7f5af0);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:fadeUp 2s ease;
+}
+
+.enter-btn {
+  margin-top:20px;
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:#7f5af0;
+  color:white;
+  font-size:18px;
+}
+
+/* MAIN LAYOUT */
+.container {
+  display:none;
+  display:flex;
+}
+
+/* SIDEBARS */
+.sidebar {
+  width:220px;
+  height:100vh;
+  padding:20px;
+  background:rgba(0,0,0,0.5);
+}
+
+.question {
+  padding:10px;
+  margin:10px 0;
+  cursor:pointer;
+  border-radius:10px;
+}
+
+.question:hover {
+  background:#7f5af0;
 }
 
 /* MAIN */
-.container {
-  display:none;
+.main {
+  flex:1;
   padding:20px;
   color:white;
 }
 
-/* TITLE */
-h1 {
-  text-align:center;
-  font-size:50px;
-  background:linear-gradient(90deg,#00d4ff,#7f5af0);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* AVATAR */
-.avatar {
-  width:140px;
-  border-radius:50%;
-  display:block;
-  margin:auto;
-  box-shadow:0 0 50px #00d4ff;
-  animation: float 4s infinite ease-in-out;
-}
-
-/* FLOAT */
-@keyframes float {
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-15px);}
-  100%{transform:translateY(0);}
-}
-
 /* CHAT */
 #chat {
-  height:300px;
-  overflow-y:auto;
+  height:400px;
   background:rgba(0,0,0,0.6);
-  border-radius:15px;
+  border-radius:10px;
   padding:10px;
+  overflow-y:auto;
 }
 
 /* BUBBLE */
@@ -109,9 +125,14 @@ h1 {
 input {
   width:100%;
   padding:10px;
+  margin-top:10px;
   border:none;
   border-radius:10px;
-  margin-top:10px;
+}
+
+@keyframes fadeUp {
+  from {opacity:0; transform:translateY(40px);}
+  to {opacity:1;}
 }
 
 </style>
@@ -126,40 +147,53 @@ input {
 
 <div class="overlay"></div>
 
-<!-- LOADER -->
-<div id="loader">
-  <p>Initializing Alaa System...</p>
-  <p>Loading AI...</p>
+<!-- INTRO -->
+<div id="intro">
+  <h1 class="title">Alaa Falugi</h1>
+  <button class="enter-btn" onclick="enterSite()">Enter</button>
 </div>
 
 <!-- MAIN -->
 <div class="container" id="main">
 
-<img src="me.jpg" class="avatar">
+<!-- LEFT -->
+<div class="sidebar">
+  <h3>Ask</h3>
+  <div class="question" onclick="ask('who is alaa')">Who is Alaa?</div>
+  <div class="question" onclick="ask('projects')">Projects</div>
+  <div class="question" onclick="ask('skills')">Skills</div>
+</div>
 
-<h1>Alaa Portfolio</h1>
+<!-- CENTER -->
+<div class="main">
+
+<h2>Alaa Portfolio</h2>
 
 <div id="chat"></div>
 
-<input id="input" placeholder="Ask anything..." />
+<input id="input" placeholder="Ask something..." />
+
+</div>
+
+<!-- RIGHT -->
+<div class="sidebar">
+  <h3>Explore</h3>
+  <div class="question" onclick="ask('experience')">Experience</div>
+  <div class="question" onclick="ask('goals')">Goals</div>
+  <div class="question" onclick="ask('linkedin')">LinkedIn</div>
+</div>
 
 </div>
 
 <script>
 
-// SOUND
-function playSound(){
-  new Audio("https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3").play();
+/* ENTER */
+function enterSite(){
+  document.getElementById("intro").style.display="none";
+  document.getElementById("main").style.display="flex";
 }
 
-// LOADING
-setTimeout(()=>{
-  document.getElementById("loader").style.display="none";
-  document.getElementById("main").style.display="block";
-  welcome();
-},3000);
-
-// CHAT
+/* MESSAGE */
 function addMessage(sender,text){
   let chat=document.getElementById("chat");
   let div=document.createElement("div");
@@ -171,7 +205,7 @@ function addMessage(sender,text){
   chat.scrollTop=chat.scrollHeight;
 }
 
-// AI
+/* AI */
 function smartReply(input){
   input=input.toLowerCase();
 
@@ -180,28 +214,31 @@ function smartReply(input){
   if(input.includes("projects")) return "AI Email + Data system.";
   if(input.includes("linkedin")) return "linkedin.com/in/alaa-zx-134829315";
 
-  return "Ask something interesting.";
+  return "Ask something else.";
 }
 
-// INPUT
+/* CLICK */
+function ask(q){
+  addMessage("User",q);
+  setTimeout(()=>{
+    addMessage("AI",smartReply(q));
+  },300);
+}
+
+/* INPUT */
 document.getElementById("input").addEventListener("keydown",function(e){
   if(e.key==="Enter"){
     let input=this.value;
+
     addMessage("User",input);
 
     setTimeout(()=>{
-      playSound();
       addMessage("AI",smartReply(input));
     },300);
 
     this.value="";
   }
 });
-
-// WELCOME
-function welcome(){
-  addMessage("AI","Welcome to my AI Portfolio 🚀");
-}
 
 </script>
 
