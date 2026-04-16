@@ -6,100 +6,148 @@
 <title>Alaa Portfolio</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial;
+
+/* ===== BASE ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-body {
-  color: white;
-  background: black;
+body{
+  color:white;
+  overflow-x:hidden;
 }
 
-/* 🎥 VIDEO */
-.video-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
-.video-bg video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* 🌑 overlay عشان النص يبان */
-.overlay {
-  position: fixed;
+/* 🎥 VIDEO BACKGROUND */
+.video-bg{
+  position:fixed;
   top:0;
   left:0;
   width:100%;
   height:100%;
-  background: rgba(0,0,0,0.6);
+  z-index:-2;
+}
+
+.video-bg video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* overlay */
+.overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.65);
   z-index:-1;
 }
 
-/* 📦 CONTENT */
-.container {
-  position: relative;
-  margin-left: 80px;
-  padding-top: 200px;
+/* ===== LAYOUT ===== */
+.main{
+  display:flex;
+  height:100vh;
+  padding:40px;
 }
 
-h1 {
-  font-size: 70px;
+/* LEFT INFO */
+.left{
+  width:30%;
 }
 
-p {
-  margin-top: 20px;
-  color: #ccc;
-  max-width: 500px;
+.left h1{
+  font-size:50px;
 }
 
-button {
-  margin-top: 20px;
-  padding: 12px 20px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
+.left p{
+  margin-top:15px;
+  color:#ccc;
 }
 
-/* 🤖 CHAT */
-.chat-box {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 300px;
-  background: rgba(0,0,0,0.8);
-  border-radius: 15px;
-  padding: 15px;
+.info{
+  margin-top:30px;
 }
 
-.messages {
-  height: 150px;
-  overflow-y: auto;
-  font-size: 14px;
+/* CENTER IMAGE */
+.center{
+  width:40%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: none;
+.center img{
+  width:350px;
+  height:350px;
+  object-fit:cover;
+  border-radius:20px;
+  border:3px solid white;
 }
+
+/* RIGHT CHAT */
+.right{
+  width:30%;
+  display:flex;
+  flex-direction:column;
+}
+
+.chat-box{
+  background:rgba(0,0,0,0.7);
+  padding:15px;
+  border-radius:15px;
+  height:60%;
+  overflow-y:auto;
+}
+
+.messages{
+  font-size:14px;
+}
+
+input{
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+}
+
+/* QUESTIONS */
+.questions{
+  margin-top:15px;
+}
+
+.questions button{
+  display:block;
+  margin-top:5px;
+  width:100%;
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+/* ===== SCROLL SECTION ===== */
+.projects{
+  padding:60px;
+}
+
+.project-card{
+  margin-top:20px;
+  padding:20px;
+  background:#111;
+  border-radius:10px;
+  cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- 🎥 VIDEO -->
+<!-- VIDEO -->
 <div class="video-bg">
   <video autoplay muted loop>
     <source src="bg.mp4" type="video/mp4">
@@ -108,54 +156,110 @@ input {
 
 <div class="overlay"></div>
 
-<!-- 📦 CONTENT -->
-<div class="container">
+<div class="main">
+
+<!-- LEFT -->
+<div class="left">
   <h1>Alaa</h1>
   <p>I build smart AI systems and web applications.</p>
-  <button onclick="playClick()">View Projects</button>
+
+  <div class="info">
+    <p><b>Field:</b> AI Engineer</p>
+    <p><b>Skills:</b> Python, AI, Web Dev</p>
+    <p><b>Focus:</b> Automation, NLP, Systems</p>
+  </div>
 </div>
 
-<!-- 🤖 CHATBOT -->
+<!-- CENTER -->
+<div class="center">
+  <img src="me.png">
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+
 <div class="chat-box">
   <div class="messages" id="chat"></div>
-  <input type="text" id="input" placeholder="Ask me..." onkeypress="send(event)">
 </div>
 
-<!-- 🔊 SOUND -->
-<audio id="clickSound" src="click.mp3"></audio>
-<audio id="typingSound" src="music.mp3"></audio>
+<input type="text" id="input" placeholder="Ask me..." onkeypress="send(event)">
+
+<div class="questions">
+  <button onclick="ask('who are you')">Who are you?</button>
+  <button onclick="ask('skills')">What are your skills?</button>
+  <button onclick="ask('projects')">What projects did you build?</button>
+  <button onclick="ask('ai')">Do you work in AI?</button>
+  <button onclick="ask('experience')">Your experience?</button>
+  <button onclick="ask('goal')">What is your goal?</button>
+  <button onclick="ask('python')">Do you use Python?</button>
+  <button onclick="ask('fastapi')">Do you use FastAPI?</button>
+  <button onclick="ask('future')">Future plans?</button>
+  <button onclick="ask('contact')">How to contact you?</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- SCROLL PROJECTS -->
+<div class="projects">
+
+<h2>Projects</h2>
+
+<div class="project-card" onclick="openProject('https://github.com')">
+Email AI Auto Reply System
+</div>
+
+<div class="project-card" onclick="openProject('https://github.com')">
+KPI Dashboard Analytics
+</div>
+
+</div>
 
 <script>
 
-/* 🔊 CLICK */
-function playClick(){
-  document.getElementById("clickSound").play();
-}
-
-/* 🤖 CHAT */
+/* CHAT */
 function send(e){
   if(e.key === "Enter"){
-    let input = document.getElementById("input").value;
-    let chat = document.getElementById("chat");
-
-    chat.innerHTML += "<div>You: " + input + "</div>";
-
-    document.getElementById("typingSound").play();
-
-    setTimeout(()=>{
-      chat.innerHTML += "<div>Bot: " + getReply(input) + "</div>";
-    }, 700);
-
-    document.getElementById("input").value = "";
+    let text = document.getElementById("input").value;
+    addMsg("You: " + text);
+    reply(text);
+    document.getElementById("input").value="";
   }
 }
 
-function getReply(text){
-  text = text.toLowerCase();
+function ask(q){
+  addMsg("You: " + q);
+  reply(q);
+}
 
-  if(text.includes("project")) return "Check my projects section.";
-  if(text.includes("ai")) return "I build AI systems.";
-  return "I will reply soon.";
+function addMsg(msg){
+  document.getElementById("chat").innerHTML += "<div>"+msg+"</div>";
+}
+
+/* BOT LOGIC */
+function reply(t){
+  t = t.toLowerCase();
+
+  let r = "I will get back to you.";
+
+  if(t.includes("who")) r="I am Alaa, an AI developer.";
+  if(t.includes("skills")) r="Python, AI, Web Development.";
+  if(t.includes("projects")) r="I built AI email system and dashboards.";
+  if(t.includes("ai")) r="Yes, I focus on AI systems.";
+  if(t.includes("experience")) r="Working on real-world AI systems.";
+  if(t.includes("goal")) r="Build powerful AI solutions.";
+  if(t.includes("python")) r="Yes, Python is my main language.";
+  if(t.includes("fastapi")) r="Yes, I use FastAPI for APIs.";
+  if(t.includes("future")) r="Scaling AI products.";
+  if(t.includes("contact")) r="You can reach me via email.";
+
+  setTimeout(()=> addMsg("Bot: " + r),500);
+}
+
+/* PROJECT LINK */
+function openProject(url){
+  window.open(url, "_blank");
 }
 
 </script>
