@@ -1,126 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Alaa Portfolio</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Portfolio - Hussam Rabaa</title>
 
 <style>
 
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
 body {
-  margin:0;
-  font-family:'Segoe UI', sans-serif;
-  color:white;
-  overflow:hidden;
+  background: #070c14;
+  color: white;
+  text-align: left;
 }
 
-/* VIDEO */
-video {
-  position:fixed;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:-2;
-}
-
-/* OVERLAY */
-.overlay {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.6);
-}
-
-/* LAYOUT */
+/* ===== CONTAINER ===== */
 .container {
-  display:flex;
-  height:100vh;
+  max-width: 1100px;
+  margin-left: 80px;
+  margin-right: auto;
+  padding: 40px 20px;
 }
 
-/* LEFT */
-.left {
-  width:30%;
-  padding:30px;
-  backdrop-filter: blur(6px);
-  background:rgba(20,20,20,0.5);
+/* ===== HERO ===== */
+.hero {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* RIGHT */
-.right {
-  width:70%;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  padding:30px;
+h1 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 1.1;
 }
 
-/* PROFILE */
-.profile {
-  width:160px;
-  height:200px;
-  border-radius:15px;
-  object-fit:cover;
-  box-shadow:0 0 20px rgba(255,140,0,0.6);
+.subtitle {
+  font-size: 20px;
+  color: #9ca3af;
+  margin-top: 20px;
+  max-width: 600px;
 }
 
-/* NAME */
-.name {
-  font-size:28px;
-  margin-top:10px;
-  color:#ffb347;
+.buttons {
+  margin-top: 30px;
 }
 
-/* QUESTIONS */
-.questions {
-  margin-top:30px;
-  width:250px;
+button {
+  padding: 14px 24px;
+  border-radius: 12px;
+  border: none;
+  margin-right: 15px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
 }
 
-.q {
-  margin:8px 0;
-  padding:10px;
-  background:rgba(255,255,255,0.08);
-  border-radius:10px;
-  cursor:pointer;
-  text-align:center;
+.primary {
+  background: linear-gradient(90deg, #00c6ff, #7c3aed);
+  color: white;
 }
 
-.q:hover {
-  background:#ff8c00;
+.secondary {
+  background: transparent;
+  border: 1px solid #333;
+  color: white;
 }
 
-/* CHAT */
-.chat-box {
-  margin-top:auto;
-  width:280px;
-  height:320px;
-  background:rgba(20,20,20,0.6);
-  backdrop-filter: blur(6px);
-  border-radius:15px;
-  padding:10px;
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,255,255,0.2);
 }
 
-/* CHAT AREA */
-#chat {
-  height:75%;
-  overflow-y:auto;
+/* ===== SECTIONS ===== */
+section {
+  margin-bottom: 120px;
 }
 
-/* BUBBLE */
-.bubble {
-  padding:8px;
-  margin:8px;
-  border-radius:10px;
-  max-width:70%;
+.section-title {
+  font-size: 36px;
+  margin-bottom: 20px;
 }
 
-.user { background:#ff8c00; margin-left:auto; }
-.ai { background:#ffcc70; color:black; }
+.section-text {
+  color: #9ca3af;
+  max-width: 600px;
+}
 
-/* INPUT */
-input {
-  width:100%;
-  padding:8px;
-  border:none;
-  border-radius:10px;
+/* ===== CARDS ===== */
+.card {
+  background: #0f172a;
+  padding: 25px;
+  border-radius: 16px;
+  margin-top: 20px;
+  border: 1px solid #1f2937;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: #1f2937;
+  margin: 5px;
+  font-size: 12px;
+}
+
+/* ===== SKILLS GRID ===== */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* ===== FADE IN ===== */
+.fade {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: 0.6s;
+}
+
+.fade.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 </style>
@@ -128,125 +137,149 @@ input {
 
 <body>
 
-<!-- VIDEO -->
-<video autoplay muted loop playsinline>
-  <source src="bg.mp4">
-</video>
-
-<div class="overlay"></div>
-
 <div class="container">
 
-<!-- LEFT -->
-<div class="left">
-  <h2>About Me</h2>
-  <p>أنا علاء، مطور ذكاء اصطناعي بحب أبني أنظمة قوية.</p>
+<!-- HERO -->
+<section class="hero fade">
+  <h1>Hussam Rabaa</h1>
+  <p class="subtitle">
+    Building scalable web applications and intelligent AI systems using modern engineering practices.
+  </p>
 
-  <h2>Skills</h2>
-  <p>Python, SQL, AI, Data Analytics</p>
+  <div class="buttons">
+    <button class="primary">View Projects</button>
+    <button class="secondary">Contact Me</button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="fade">
+  <h2 class="section-title">Engineering modern products with AI at the core.</h2>
+  <p class="section-text">
+    Software Engineer with hands-on experience in full-stack development and applied AI.
+    Focused on building scalable systems and production-ready solutions.
+  </p>
+
+  <div class="card">
+    <h3>Background</h3>
+    <p class="section-text">
+      Software Engineering graduate with experience in ASP.NET, C#, and SQL Server.
+      Previously worked on building and maintaining web applications.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Current Focus</h3>
+    <p class="section-text">
+      Working on machine learning, NLP, and RAG systems using Python, FastAPI, and PyTorch.
+    </p>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="fade">
+  <h2 class="section-title">Professional Experience</h2>
+
+  <div class="card">
+    <h3>AI Engineer Trainee — AI SPiRE Program</h3>
+    <p class="section-text">
+      Building real-world AI systems, working on ML workflows, NLP, and production-ready pipelines.
+    </p>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="fade">
+  <h2 class="section-title">Selected Work</h2>
+
+  <div class="card">
+    <h3>WM Store</h3>
+    <p class="section-text">
+      Production-ready e-commerce platform with full system flow, admin dashboard, and authentication.
+    </p>
+    <div>
+      <span class="tag">ASP.NET</span>
+      <span class="tag">C#</span>
+      <span class="tag">SQL</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>KPI Dashboard</h3>
+    <p class="section-text">
+      Data analytics dashboard using Python and interactive visualizations.
+    </p>
+    <div>
+      <span class="tag">Python</span>
+      <span class="tag">Pandas</span>
+      <span class="tag">Plotly</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- SKILLS -->
+<section class="fade">
+  <h2 class="section-title">Skills</h2>
+
+  <div class="skills">
+
+    <div class="card">
+      <h3>Frontend</h3>
+      <div>
+        <span class="tag">React</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Backend</h3>
+      <div>
+        <span class="tag">ASP.NET</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">FastAPI</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>AI / ML</h3>
+      <div>
+        <span class="tag">Python</span>
+        <span class="tag">PyTorch</span>
+        <span class="tag">NLP</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="fade">
+  <h2 class="section-title">Contact</h2>
+
+  <div class="card">
+    <p>Email: hussam3.rabaa@gmail.com</p>
+    <p>Phone: 0791 455 333</p>
+    <p>Location: Amman, Jordan</p>
+  </div>
+</section>
+
 </div>
 
-<!-- RIGHT -->
-<div class="right">
-
-<img src="me.png" class="profile">
-<div class="name">Alaa Falugi</div>
-
-<div class="questions">
-  <div class="q" onclick="ask('who')">Who is Alaa?</div>
-  <div class="q" onclick="ask('projects')">Projects</div>
-  <div class="q" onclick="ask('skills')">Skills</div>
-</div>
-
-<div class="chat-box">
-  <div id="chat"></div>
-  <input id="input" placeholder="Ask something...">
-</div>
-
-</div>
-
-</div>
-
+<!-- JS (SCROLL ANIMATION) -->
 <script>
+const elements = document.querySelectorAll(".fade");
 
-/* 🎧 MUSIC */
-let music = new Audio('music.mp3');
-music.loop = true;
-music.volume = 0.2;
-
-/* 🔊 SOUNDS */
-let clickSound = new Audio('click.mp3');
-let typingSound = new Audio('typing.mp3');
-
-/* ▶️ تشغيل بعد أول click */
-document.body.addEventListener("click", () => {
-  music.play().catch(()=>{});
-}, { once: true });
-
-/* ADD MESSAGE */
-function add(sender,text){
-  let chat=document.getElementById("chat");
-  let div=document.createElement("div");
-
-  div.className="bubble "+(sender==="User"?"user":"ai");
-  chat.appendChild(div);
-
-  typeText(div,text);
-}
-
-/* 🔥 Typing (خفيف) */
-function typeText(el,text){
-  let i=0;
-
-  function typing(){
-    if(i<text.length){
-      el.innerHTML += text.charAt(i);
-
-      // صوت كل 3 حروف فقط
-      if(i % 3 === 0 && typingSound.src){
-        typingSound.currentTime = 0;
-        typingSound.play().catch(()=>{});
-      }
-
-      i++;
-      setTimeout(typing,50);
+window.addEventListener("scroll", () => {
+  elements.forEach(el => {
+    const top = el.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      el.classList.add("show");
     }
-  }
-
-  typing();
-}
-
-/* AI */
-function reply(input){
-  input=input.toLowerCase();
-
-  if(input.includes("who")) return "أنا علاء، مطور AI بحب أبني أنظمة قوية.";
-  if(input.includes("skills")) return "Python | SQL | AI";
-  if(input.includes("projects")) return "AI Email System + Analytics.";
-
-  return "جرب تسأل بطريقة ثانية 😉";
-}
-
-/* ASK */
-function ask(q){
-  if(clickSound.src){
-    clickSound.currentTime = 0;
-    clickSound.play().catch(()=>{});
-  }
-
-  add("User",q);
-  setTimeout(()=>add("AI",reply(q)),300);
-}
-
-/* INPUT */
-document.getElementById("input").addEventListener("keydown",function(e){
-  if(e.key==="Enter"){
-    let val=this.value;
-    ask(val);
-    this.value="";
-  }
+  });
 });
-
 </script>
 
 </body>
