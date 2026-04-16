@@ -12,7 +12,7 @@
   margin:0;
   padding:0;
   box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
+  font-family:'Segoe UI',sans-serif;
 }
 
 body{
@@ -20,7 +20,7 @@ body{
   overflow-x:hidden;
 }
 
-/* 🎥 VIDEO BACKGROUND */
+/* 🎥 VIDEO */
 .video-bg{
   position:fixed;
   top:0;
@@ -54,7 +54,7 @@ body{
   padding:40px;
 }
 
-/* LEFT INFO */
+/* LEFT */
 .left{
   width:30%;
 }
@@ -77,13 +77,15 @@ body{
   width:40%;
   display:flex;
   justify-content:center;
-  align-items:center;
+  align-items:flex-start;
+  padding-top:40px;
 }
 
 .center img{
-  width:350px;
-  height:350px;
+  width:360px;
+  height:360px;
   object-fit:cover;
+  object-position:top;
   border-radius:20px;
   border:3px solid white;
 }
@@ -96,7 +98,9 @@ body{
 }
 
 .chat-box{
-  background:rgba(0,0,0,0.7);
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1);
   padding:15px;
   border-radius:15px;
   height:60%;
@@ -123,13 +127,23 @@ input{
   display:block;
   margin-top:5px;
   width:100%;
-  padding:8px;
+  padding:10px;
   border:none;
-  border-radius:8px;
+  border-radius:10px;
   cursor:pointer;
+
+  background:linear-gradient(135deg,#1e293b,#0f172a);
+  color:white;
+  border:1px solid #334155;
+  transition:0.3s;
 }
 
-/* ===== SCROLL SECTION ===== */
+.questions button:hover{
+  background:linear-gradient(135deg,#00e5ff,#6366f1);
+  transform:translateY(-2px);
+}
+
+/* SCROLL PROJECTS */
 .projects{
   padding:60px;
 }
@@ -140,6 +154,12 @@ input{
   background:#111;
   border-radius:10px;
   cursor:pointer;
+  transition:0.3s;
+}
+
+.project-card:hover{
+  background:#222;
+  transform:translateY(-3px);
 }
 
 </style>
@@ -201,9 +221,8 @@ input{
 
 </div>
 
-<!-- SCROLL PROJECTS -->
+<!-- PROJECTS -->
 <div class="projects">
-
 <h2>Projects</h2>
 
 <div class="project-card" onclick="openProject('https://github.com')">
@@ -254,12 +273,12 @@ function reply(t){
   if(t.includes("future")) r="Scaling AI products.";
   if(t.includes("contact")) r="You can reach me via email.";
 
-  setTimeout(()=> addMsg("Bot: " + r),500);
+  setTimeout(()=> addMsg("Neuro AI: " + r),500);
 }
 
 /* PROJECT LINK */
 function openProject(url){
-  window.open(url, "_blank");
+  window.open(url,"_blank");
 }
 
 </script>
