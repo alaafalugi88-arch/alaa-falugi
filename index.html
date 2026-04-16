@@ -690,6 +690,32 @@
     margin: 0 48px;
   }
 </style>
+  /* VIDEO BACKGROUND */
+.video-bg{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:-2;
+}
+
+.video-bg video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* OVERLAY (خفيف عشان الفيديو يبين) */
+.overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.35);
+  z-index:-1;
+}
 </head>
 <body>
 
@@ -1141,5 +1167,37 @@ function filterProjects(cat, btn) {
   });
 }
 </script>
+<!-- 🔊 SOUND -->
+<audio id="clickSound" src="click.mp3"></audio>
+<audio id="music" src="music.mp3"></audio>
+
+<script>
+
+/* 🔥 تشغيل الميوزك (لازم user click) */
+document.addEventListener("click", () => {
+  const music = document.getElementById("music");
+  if (music.paused) {
+    music.volume = 0.4; // خفف الصوت
+    music.play().catch(()=>{});
+  }
+});
+
+/* 🔊 click sound */
+function playClick(){
+  const click = document.getElementById("clickSound");
+  click.currentTime = 0;
+  click.play();
+}
+
+</script>
+  
 </body>
+  <!-- VIDEO -->
+<div class="video-bg">
+  <video autoplay muted loop playsinline>
+    <source src="bg.mp4" type="video/mp4">
+  </video>
+</div>
+
+<div class="overlay"></div>
 </html>
