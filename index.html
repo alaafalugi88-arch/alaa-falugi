@@ -21,6 +21,7 @@ video {
   z-index:-2;
 }
 
+/* OVERLAY */
 .overlay {
   position:fixed;
   width:100%;
@@ -38,8 +39,8 @@ video {
 .left {
   width:30%;
   padding:30px;
-  backdrop-filter: blur(15px);
-  background:rgba(20,20,20,0.6);
+  backdrop-filter: blur(6px);
+  background:rgba(20,20,20,0.5);
 }
 
 /* RIGHT */
@@ -57,25 +58,25 @@ video {
   height:200px;
   border-radius:15px;
   object-fit:cover;
-  box-shadow:0 0 25px rgba(255,140,0,0.6);
+  box-shadow:0 0 20px rgba(255,140,0,0.6);
 }
 
 /* NAME */
 .name {
-  font-size:30px;
+  font-size:28px;
   margin-top:10px;
   color:#ffb347;
 }
 
 /* QUESTIONS */
 .questions {
-  margin-top:40px;
+  margin-top:30px;
   width:250px;
 }
 
 .q {
-  margin:10px 0;
-  padding:12px;
+  margin:8px 0;
+  padding:10px;
   background:rgba(255,255,255,0.08);
   border-radius:10px;
   cursor:pointer;
@@ -89,24 +90,26 @@ video {
 /* CHAT */
 .chat-box {
   margin-top:auto;
-  width:300px;
-  height:350px;
-  background:rgba(20,20,20,0.7);
-  backdrop-filter: blur(15px);
+  width:280px;
+  height:320px;
+  background:rgba(20,20,20,0.6);
+  backdrop-filter: blur(6px);
   border-radius:15px;
   padding:10px;
 }
 
+/* CHAT AREA */
 #chat {
-  height:80%;
+  height:75%;
   overflow-y:auto;
 }
 
 /* BUBBLE */
 .bubble {
-  padding:10px;
-  margin:10px;
+  padding:8px;
+  margin:8px;
   border-radius:10px;
+  max-width:70%;
 }
 
 .user { background:#ff8c00; margin-left:auto; }
@@ -115,7 +118,7 @@ video {
 /* INPUT */
 input {
   width:100%;
-  padding:10px;
+  padding:8px;
   border:none;
   border-radius:10px;
 }
@@ -126,7 +129,7 @@ input {
 <body>
 
 <!-- VIDEO -->
-<video autoplay muted loop>
+<video autoplay muted loop playsinline>
   <source src="bg.mp4">
 </video>
 
@@ -169,15 +172,15 @@ input {
 /* 🎧 MUSIC */
 let music = new Audio('music.mp3');
 music.loop = true;
-music.volume = 0.3;
+music.volume = 0.2;
 
 /* 🔊 SOUNDS */
 let clickSound = new Audio('click.mp3');
 let typingSound = new Audio('typing.mp3');
 
-/* ▶️ تشغيل الموسيقى بعد أول كبسة */
+/* ▶️ تشغيل بعد أول click */
 document.body.addEventListener("click", () => {
-  music.play();
+  music.play().catch(()=>{});
 }, { once: true });
 
 /* ADD MESSAGE */
@@ -191,7 +194,7 @@ function add(sender,text){
   typeText(div,text);
 }
 
-/* ⌨️ Typing */
+/* 🔥 Typing (خفيف) */
 function typeText(el,text){
   let i=0;
 
@@ -199,13 +202,14 @@ function typeText(el,text){
     if(i<text.length){
       el.innerHTML += text.charAt(i);
 
-      if(typingSound.src){
+      // صوت كل 3 حروف فقط
+      if(i % 3 === 0 && typingSound.src){
         typingSound.currentTime = 0;
-        typingSound.play();
+        typingSound.play().catch(()=>{});
       }
 
       i++;
-      setTimeout(typing,30);
+      setTimeout(typing,50);
     }
   }
 
@@ -225,10 +229,13 @@ function reply(input){
 
 /* ASK */
 function ask(q){
-  if(clickSound.src) clickSound.play();
+  if(clickSound.src){
+    clickSound.currentTime = 0;
+    clickSound.play().catch(()=>{});
+  }
 
   add("User",q);
-  setTimeout(()=>add("AI",reply(q)),400);
+  setTimeout(()=>add("AI",reply(q)),300);
 }
 
 /* INPUT */
