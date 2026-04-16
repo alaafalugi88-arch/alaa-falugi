@@ -3,250 +3,1143 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alaa Portfolio</title>
+<title>Hussam Rabaa — Software & AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161e;
+    --bg3: #1a1e28;
+    --card: #1e2330;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #f0f0f0;
+    --muted: #8a8fa8;
+    --accent: #5e9bea;
+    --accent2: #7dd3a8;
+    --accent3: #e8a96b;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Instrument Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
 
-/* ===== BASE ===== */
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI';}
-body{color:white;overflow-x:hidden;}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* VIDEO */
-.video-bg{
-  position:fixed;
-  width:100%;
-  height:100%;
-  z-index:-2;
-}
-.video-bg video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+  html { scroll-behavior: smooth; }
 
-/* 🔥 lighter overlay */
-.overlay{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.45);
-  z-index:-1;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
 
-/* LAYOUT */
-.main{
-  display:flex;
-  height:100vh;
-  padding:40px;
-}
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(13,15,20,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
 
-/* LEFT */
-.left{width:30%;}
-.left h1{font-size:55px;}
-.left p{margin-top:10px;color:#ddd;}
-.info{margin-top:30px;}
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
 
-/* CENTER IMAGE */
-.center{
-  width:40%;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  padding-top:20px;
-}
-.center img{
-  width:400px;
-  height:400px;
-  object-fit:cover;
-  object-position:top;
-  border-radius:25px;
-  border:2px solid rgba(255,255,255,0.5);
-  box-shadow:0 0 40px rgba(0,0,0,0.6);
-}
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
 
-/* RIGHT CHAT */
-.right{width:30%;display:flex;flex-direction:column;}
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
 
-.chat-box{
-  background:rgba(0,0,0,0.35);
-  backdrop-filter:blur(15px);
-  border:1px solid rgba(255,255,255,0.1);
-  padding:15px;
-  border-radius:20px;
-  height:60%;
-  overflow-y:auto;
-}
+  .nav-links a:hover { color: var(--text); }
 
-input{
-  margin-top:10px;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-}
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 48px 80px;
+    gap: 64px;
+    position: relative;
+    overflow: hidden;
+  }
 
-/* QUESTIONS */
-.questions button{
-  width:100%;
-  padding:12px;
-  margin-top:6px;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-  color:white;
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(94,155,234,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
-  background:linear-gradient(135deg,#0ea5e9,#6366f1);
-  transition:0.3s;
-}
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: 200px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(125,211,168,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
-.questions button:hover{
-  transform:scale(1.05);
-  background:linear-gradient(135deg,#22d3ee,#8b5cf6);
-}
+  .hero-text { position: relative; z-index: 1; }
 
-/* PROJECTS */
-.projects{padding:60px;}
-.project-card{
-  margin-top:15px;
-  padding:20px;
-  background:#111;
-  border-radius:10px;
-  cursor:pointer;
-}
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 0.5px solid var(--border2);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--accent2);
+    margin-bottom: 28px;
+  }
 
+  .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); display: inline-block; animation: pulse 2s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(42px, 5vw, 68px);
+    line-height: 1.08;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 440px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #0d0f14;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--text);
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 0.5px solid var(--border2);
+    font-size: 14px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-secondary:hover { background: var(--card); transform: translateY(-1px); }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+  }
+
+  .stat-item { }
+
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 32px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-family: var(--mono);
+  }
+
+  /* HERO RIGHT */
+  .hero-right {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-card {
+    background: var(--card);
+    border: 0.5px solid var(--border2);
+    border-radius: 24px;
+    padding: 32px;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .profile-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .avatar {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5e9bea, #7dd3a8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 22px;
+    color: #0d0f14;
+    flex-shrink: 0;
+  }
+
+  .profile-info h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .profile-info p {
+    font-size: 13px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .info-rows { display: flex; flex-direction: column; gap: 12px; }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  .info-row-label { color: var(--muted); }
+  .info-row-val { color: var(--text); font-weight: 500; }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .tag {
+    background: var(--bg3);
+    border: 0.5px solid var(--border2);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--accent);
+  }
+
+  /* ── SECTION ── */
+  section {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 0.5px;
+    background: var(--accent2);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(30px, 4vw, 46px);
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+
+  .section-subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 56px;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .about-text p strong { color: var(--text); font-weight: 600; }
+
+  .about-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .highlight-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .highlight-card h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+
+  .highlight-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── EXPERIENCE ── */
+  .exp-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .exp-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .exp-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .exp-period {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+    margin-bottom: 10px;
+  }
+
+  .exp-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── PROJECTS ── */
+  .projects-filter {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--sans);
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--bg3);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 26px;
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .project-card:hover {
+    border-color: var(--border2);
+    transform: translateY(-3px);
+  }
+
+  .project-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .project-title {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .project-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .skill-tag {
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    border-radius: 5px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--accent2);
+  }
+
+  .project-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--accent);
+    margin-top: 4px;
+  }
+
+  .project-link svg { width: 12px; height: 12px; }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .skill-category {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .skill-category-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent3);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+  }
+
+  .skill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  .skill-name { color: var(--text); }
+
+  .skill-bar-wrap {
+    width: 80px;
+    height: 3px;
+    background: var(--bg3);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .skill-bar {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--accent);
+    transition: width 1s ease;
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s, transform 0.15s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--border2);
+    transform: translateX(4px);
+  }
+
+  .contact-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .contact-link-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .contact-link-info p { font-size: 12px; color: var(--muted); font-family: var(--mono); }
+
+  .contact-cta {
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(94,155,234,0.1), rgba(125,211,168,0.07));
+    border: 0.5px solid var(--border2);
+    border-radius: 20px;
+  }
+
+  .contact-cta h3 {
+    font-family: var(--serif);
+    font-size: 30px;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+
+  .contact-cta p {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 28px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { gap: 20px; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; }
+    .hero-right { display: none; }
+    section { padding: 70px 24px; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-text > * {
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-text > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-text > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-text > *:nth-child(3) { animation-delay: 0.3s; }
+  .hero-text > *:nth-child(4) { animation-delay: 0.4s; }
+  .hero-text > *:nth-child(5) { animation-delay: 0.5s; }
+
+  .divider {
+    border: none;
+    border-top: 0.5px solid var(--border);
+    margin: 0 48px;
+  }
 </style>
 </head>
-
 <body>
 
-<!-- VIDEO -->
-<div class="video-bg">
-  <video autoplay muted loop>
-    <source src="bg.mp4">
-  </video>
-</div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Hussam Rabaa</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-<div class="overlay"></div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow"><span></span> Available for opportunities</div>
+    <h1>Software &<br><em>AI Engineer</em></h1>
+    <p class="hero-desc">
+      Building scalable web systems and intelligent AI solutions — from full-stack applications to production-ready ML pipelines.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">AI</div>
+        <div class="stat-label">Current Focus</div>
+      </div>
+    </div>
+  </div>
 
-<div class="main">
-
-<!-- LEFT -->
-<div class="left">
-  <h1>Alaa</h1>
-  <p>I build smart AI systems and web applications.</p>
-
-  <div class="info">
-    <p><b>Field:</b> AI Engineer</p>
-    <p><b>Skills:</b> Python, AI, Web Dev</p>
-    <p><b>Focus:</b> Automation, NLP, Systems</p>
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="profile-header">
+        <div class="avatar">HR</div>
+        <div class="profile-info">
+          <h2>Hussam Rabaa</h2>
+          <p>Software & AI Engineer</p>
+        </div>
+      </div>
+      <div class="info-rows">
+        <div class="info-row">
+          <span class="info-row-label">University</span>
+          <span class="info-row-val">Al-Zaytoonah University</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-label">Degree</span>
+          <span class="info-row-val">Software Engineering</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-label">Program</span>
+          <span class="info-row-val">AI.SPire</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-label">IEEE Member</span>
+          <span class="info-row-val" style="color: var(--accent2);">Yes ✓</span>
+        </div>
+        <div class="info-row">
+          <span class="info-row-label">Location</span>
+          <span class="info-row-val">Jordan</span>
+        </div>
+      </div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">PyTorch</span>
+        <span class="tag">FastAPI</span>
+        <span class="tag">ASP.NET</span>
+        <span class="tag">SQL</span>
+        <span class="tag">NLP</span>
+        <span class="tag">RAG</span>
+        <span class="tag">Docker</span>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- CENTER -->
-<div class="center">
-  <img src="me.png">
-</div>
+<hr class="divider">
 
-<!-- RIGHT -->
-<div class="right">
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About</div>
+  <h2 class="section-title">Who I Am</h2>
+  <p class="section-subtitle">A developer who bridges traditional software engineering with modern AI.</p>
 
-<div class="chat-box" id="chat"></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I am a <strong>Software Engineering graduate</strong> from Al-Zaytoonah University with hands-on experience in full-stack web development. Previously at <strong>LenvoSoft</strong>, I developed and maintained web applications using ASP.NET, C#, and SQL Server.
+      </p>
+      <p>
+        I specialize in building efficient, scalable, and user-focused systems — from dynamic web applications to AI-powered platforms. I write clean, maintainable code and focus on delivering practical, real-world solutions.
+      </p>
+      <p>
+        Currently advancing my expertise in applied AI through the <strong>AI.SPire Program</strong>, working on NLP, retrieval-augmented generation (RAG), and deploying production-ready AI systems. As an <strong>IEEE member</strong>, I stay at the forefront of technology development.
+      </p>
+    </div>
 
-<input id="input" placeholder="Ask me..." onkeydown="send(event)">
+    <div class="about-highlights">
+      <div class="highlight-card">
+        <h4>Full-Stack Development</h4>
+        <p>Experience building complete web applications with ASP.NET MVC, C#, SQL Server, and modern frontend technologies.</p>
+      </div>
+      <div class="highlight-card" style="border-left-color: var(--accent2);">
+        <h4>Applied AI & ML</h4>
+        <p>Focused on NLP pipelines, RAG systems, and deploying production-grade machine learning models with PyTorch and Hugging Face.</p>
+      </div>
+      <div class="highlight-card" style="border-left-color: var(--accent3);">
+        <h4>Data Engineering</h4>
+        <p>Building ETL pipelines, SQL analytics, time-series analysis, and KPI dashboards for real-world data-driven decisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-<div class="questions">
-  <button onclick="ask('who are you')">Who are you?</button>
-  <button onclick="ask('skills')">Skills</button>
-  <button onclick="ask('projects')">Projects</button>
-  <button onclick="ask('ai')">AI</button>
-  <button onclick="ask('experience')">Experience</button>
-  <button onclick="ask('goal')">Goal</button>
-  <button onclick="ask('python')">Python</button>
-  <button onclick="ask('fastapi')">FastAPI</button>
-  <button onclick="ask('future')">Future</button>
-  <button onclick="ask('contact')">Contact</button>
-</div>
+<hr class="divider">
 
-</div>
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <h2 class="section-title">Where I've Worked</h2>
+  <p class="section-subtitle">Professional experience building production systems.</p>
 
-</div>
+  <div class="exp-card">
+    <div class="exp-dot"></div>
+    <div>
+      <div class="exp-company">LenvoSoft</div>
+      <div class="exp-title">Full-Stack Web Developer</div>
+      <div class="exp-period">Professional Experience</div>
+      <div class="exp-desc">
+        Developed and maintained web applications using ASP.NET, C#, and SQL Server. Built scalable backend services, designed relational database schemas, and delivered user-facing features with a focus on performance and reliability.
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-card">
+    <div class="exp-dot" style="background: var(--accent2);"></div>
+    <div>
+      <div class="exp-company" style="color: var(--accent2);">AI.SPire Program</div>
+      <div class="exp-title">Applied AI Trainee</div>
+      <div class="exp-period">Current</div>
+      <div class="exp-desc">
+        Working on real-world machine learning and intelligent systems. Building NLP pipelines, retrieval-augmented generation (RAG) systems, and production-ready AI applications using Python, PyTorch, FastAPI, and Docker.
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
 
 <!-- PROJECTS -->
-<div class="projects">
-<h2>Projects</h2>
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <h2 class="section-title">What I've Built</h2>
+  <p class="section-subtitle">A selection of projects across data engineering, ML, and web development.</p>
 
-<div class="project-card" onclick="openProject('https://github.com')">
-AI Email System
-</div>
+  <div class="projects-filter">
+    <button class="filter-btn active" onclick="filterProjects('all', this)">All</button>
+    <button class="filter-btn" onclick="filterProjects('sql', this)">SQL & Data</button>
+    <button class="filter-btn" onclick="filterProjects('ml', this)">Machine Learning</button>
+    <button class="filter-btn" onclick="filterProjects('web', this)">Web Dev</button>
+    <button class="filter-btn" onclick="filterProjects('viz', this)">Visualization</button>
+  </div>
 
-<div class="project-card" onclick="openProject('https://github.com')">
-KPI Dashboard
-</div>
+  <div class="projects-grid" id="projectsGrid">
 
-</div>
+    <a href="https://github.com/LevelUp-Applied-AI/m3-l3-sql-analytics-alaafalugi88-arch-1" target="_blank" class="project-card" data-cat="sql">
+      <div class="project-num">01 — SQL Analytics</div>
+      <div class="project-title">Enterprise SQL Analytics Platform</div>
+      <div class="project-desc">SQL queries against a PostgreSQL database for Levant Tech Solutions. Covers JOINs, GROUP BY, window functions, CTEs, and schema design for employees, departments, and projects.</div>
+      <div class="project-skills">
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Window Functions</span>
+        <span class="skill-tag">CTEs</span>
+      </div>
+      <div class="project-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View on GitHub
+      </div>
+    </a>
 
-<!-- 🔊 SOUND -->
-<audio id="clickSound" src="click.mp3"></audio>
-<audio id="music" src="music.mp3"></audio>
+    <a href="https://github.com/MsDiala/SQL-Murder-Mystery" target="_blank" class="project-card" data-cat="web">
+      <div class="project-num">02 — E-Commerce</div>
+      <div class="project-title">Full-Featured E-Commerce Platform</div>
+      <div class="project-desc">Full-featured e-commerce platform with end-to-end shopping functionality and a custom admin system, focusing on performance, scalability, and user experience.</div>
+      <div class="project-skills">
+        <span class="skill-tag">ASP.NET MVC</span>
+        <span class="skill-tag">C#</span>
+        <span class="skill-tag">SQL Server</span>
+        <span class="skill-tag">Entity Framework</span>
+        <span class="skill-tag">Auth</span>
+      </div>
+      <div class="project-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View on GitHub
+      </div>
+    </a>
+
+    <a href="https://github.com/LevelUp-Applied-AI/m3-d3-sql-fundamentals-alaafalugi88-arch" target="_blank" class="project-card" data-cat="sql">
+      <div class="project-num">03 — Data Analysis</div>
+      <div class="project-title">Advanced SQL Data Analysis</div>
+      <div class="project-desc">SQL-based data analysis using advanced queries including window functions, subqueries, CTEs, and aggregations to extract meaningful insights from relational datasets.</div>
+      <div class="project-skills">
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">EDA</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Git</span>
+      </div>
+      <div class="project-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View on GitHub
+      </div>
+    </a>
+
+    <a href="https://github.com/LevelUp-Applied-AI/m3-i3-etl-pipeline-alaafalugi88-arch" target="_blank" class="project-card" data-cat="sql">
+      <div class="project-num">04 — ETL Pipeline</div>
+      <div class="project-title">End-to-End ETL Data Pipeline</div>
+      <div class="project-desc">Built an ETL pipeline to extract, transform, and load data into a structured database. Applied data cleaning, transformation, and integration techniques to prepare datasets for analysis.</div>
+      <div class="project-skills">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">ETL</span>
+        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">Data Modeling</span>
+      </div>
+      <div class="project-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View on GitHub
+      </div>
+    </a>
+
+    <a href="https://github.com/LevelUp-Applied-AI/m3-s2-time-series-analytics-alaafalugi88-arch" target="_blank" class="project-card" data-cat="sql">
+      <div class="project-num">05 — Time Series</div>
+      <div class="project-title">Time Series Analytics</div>
+      <div class="project-desc">Time series analysis to identify trends, patterns, and changes over time using SQL and analytical techniques. Applied window functions like moving averages and LAG for temporal insights.</div>
+      <div class="project-skills">
+        <span class="skill-tag">PostgreSQL</span>
+        <span class="skill-tag">Time Series</span>
+        <span class="skill-tag">Window Functions</span>
+        <span class="skill-tag">Trend Analysis</span>
+      </div>
+      <div class="project-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View on GitHub
+      </div>
+    </a>
+
+    <a href="https://github.com/LevelUp-Applied-AI/m4-d4-descriptive-analytics-alaafalugi88-arch" target="_blank" class="project-card" data-cat="viz">
+      <div class="project-num">06 — Analytics</div>
+      <div class="project-title">Descriptive Data Analytics</div>
+      <div class="project-desc">Descriptive data analysis to summarize datasets and extract key insights. Used aggregation and visualization techniques to understand patterns and support data-driven decisions.</div>
+      <div class="project-skills">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">Matplotlib</span>
+        <span class="skill-tag">Seaborn</span>
+        <span class="skill-tag">KPI</span>
+      </div>
+      <div class="project-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View on GitHub
+      </div>
+    </a>
+
+    <a href="https://github.com/LevelUp-Applied-AI/m4-i4-kpi-dashboard-alaafalugi88-arch" target="_blank" class="project-card" data-cat="viz">
+      <div class="project-num">08 — Dashboard</div>
+      <div class="project-title">KPI Business Dashboard</div>
+      <div class="project-desc">KPI dashboard to monitor and visualize business performance. Analyzed data and created interactive visualizations to track key metrics and support data-driven decision-making.</div>
+      <div class="project-skills">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Plotly</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">KPI Design</span>
+      </div>
+      <div class="project-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View on GitHub
+      </div>
+    </a>
+
+    <a href="https://github.com/alaafalugi88-arch/m4-s2" target="_blank" class="project-card" data-cat="viz">
+      <div class="project-num">09 — Visualization</div>
+      <div class="project-title">Data Visualization & Pattern Analysis</div>
+      <div class="project-desc">Explored and analyzed datasets using data visualization techniques to uncover trends and patterns. Created bar, line, and scatter charts to communicate insights clearly.</div>
+      <div class="project-skills">
+        <span class="skill-tag">Matplotlib</span>
+        <span class="skill-tag">Seaborn</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">Pattern Recognition</span>
+      </div>
+      <div class="project-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View on GitHub
+      </div>
+    </a>
+
+    <a href="https://github.com/LevelUp-Applied-AI/m5-d5a-classification-basics-Hussamraba" target="_blank" class="project-card" data-cat="ml">
+      <div class="project-num">10 — ML</div>
+      <div class="project-title">Machine Learning Classification</div>
+      <div class="project-desc">Implemented a classification workflow with train/test splitting and model evaluation using standard metrics — accuracy, precision, recall, and F1-score — using scikit-learn.</div>
+      <div class="project-skills">
+        <span class="skill-tag">Scikit-learn</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">NumPy</span>
+        <span class="skill-tag">Model Evaluation</span>
+      </div>
+      <div class="project-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View on GitHub
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Skills</div>
+  <h2 class="section-title">Technical Stack</h2>
+  <p class="section-subtitle">Technologies and tools I work with regularly.</p>
+
+  <div class="skills-grid">
+    <div class="skill-category">
+      <div class="skill-category-title">Languages</div>
+      <div class="skill-list">
+        <div class="skill-item"><span class="skill-name">Python</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">C#</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">SQL</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">JavaScript</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="skill-category-title">AI & ML</div>
+      <div class="skill-list">
+        <div class="skill-item"><span class="skill-name">PyTorch</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%; background: var(--accent2);"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Scikit-learn</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%; background: var(--accent2);"></div></div></div>
+        <div class="skill-item"><span class="skill-name">NLP / spaCy</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:70%; background: var(--accent2);"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Hugging Face</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%; background: var(--accent2);"></div></div></div>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="skill-category-title">Web & Backend</div>
+      <div class="skill-list">
+        <div class="skill-item"><span class="skill-name">FastAPI</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%; background: var(--accent3);"></div></div></div>
+        <div class="skill-item"><span class="skill-name">ASP.NET MVC</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%; background: var(--accent3);"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Docker</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:70%; background: var(--accent3);"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Entity Framework</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%; background: var(--accent3);"></div></div></div>
+      </div>
+    </div>
+
+    <div class="skill-category">
+      <div class="skill-category-title">Data & Databases</div>
+      <div class="skill-list">
+        <div class="skill-item"><span class="skill-name">PostgreSQL</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">SQL Server</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Pandas</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Plotly / Matplotlib</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">Let's Connect</h2>
+  <p class="section-subtitle">Open to opportunities, collaborations, and conversations.</p>
+
+  <div class="contact-grid">
+    <div class="contact-links">
+      <a href="mailto:alaa.falugi88@gmail.com" class="contact-link">
+        <div class="contact-icon">@</div>
+        <div class="contact-link-info">
+          <h4>Email</h4>
+          <p>alaa.falugi88@gmail.com</p>
+        </div>
+      </a>
+
+      <a href="https://github.com/alaafalugi88-arch" target="_blank" class="contact-link">
+        <div class="contact-icon">gh</div>
+        <div class="contact-link-info">
+          <h4>GitHub</h4>
+          <p>alaafalugi88-arch</p>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/in/alaa-zx-134829315/" target="_blank" class="contact-link">
+        <div class="contact-icon">in</div>
+        <div class="contact-link-info">
+          <h4>LinkedIn</h4>
+          <p>alaa-zx-134829315</p>
+        </div>
+      </a>
+
+      <a href="tel:0777106575" class="contact-link">
+        <div class="contact-icon">#</div>
+        <div class="contact-link-info">
+          <h4>Phone</h4>
+          <p>0777 106 575</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="contact-cta">
+      <h3>Ready to build something together?</h3>
+      <p>Whether you have a project in mind, a role to fill, or just want to talk AI and software — I'd love to hear from you.</p>
+      <a href="mailto:alaa.falugi88@gmail.com" class="btn-primary">Send an Email →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Hussam Rabaa — Software & AI Engineer</span>
+  <span>Built with HTML · Jordan · 2025</span>
+</footer>
 
 <script>
-
-/* 🔥 FIX SOUND (IMPORTANT) */
-document.addEventListener("click", () => {
-  document.getElementById("music").play().catch(()=>{});
-});
-
-/* CLICK */
-function playClick(){
-  document.getElementById("clickSound").play();
+function filterProjects(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
 }
-
-/* CHAT */
-function send(e){
-  if(e.key==="Enter"){
-    let t=input.value;
-    add("You: "+t);
-    reply(t);
-    input.value="";
-    playClick();
-  }
-}
-
-function ask(q){
-  add("You: "+q);
-  reply(q);
-  playClick();
-}
-
-function add(m){
-  chat.innerHTML+="<div>"+m+"</div>";
-  chat.scrollTop=chat.scrollHeight;
-}
-
-/* BOT */
-function reply(t){
-  t=t.toLowerCase();
-  let r="I will reply soon.";
-
-  if(t.includes("who")) r="I am Alaa, an AI engineer.";
-  if(t.includes("skills")) r="Python, AI, Web Development.";
-  if(t.includes("projects")) r="AI systems and dashboards.";
-  if(t.includes("ai")) r="Yes, I focus on AI.";
-  if(t.includes("experience")) r="Building real systems.";
-  if(t.includes("goal")) r="Create powerful AI tools.";
-  if(t.includes("python")) r="Yes, main language.";
-  if(t.includes("fastapi")) r="Yes, I use it.";
-  if(t.includes("future")) r="Scaling AI.";
-  if(t.includes("contact")) r="Reach me via email.";
-
-  setTimeout(()=>add("Neuro AI: "+r),500);
-}
-
-/* PROJECT */
-function openProject(url){
-  window.open(url);
-}
-
 </script>
-
 </body>
 </html>
