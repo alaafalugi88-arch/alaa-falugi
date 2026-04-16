@@ -8,22 +8,27 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-  :root {
-    --bg: #0d0f14;
-    --bg2: #13161e;
-    --bg3: #1a1e28;
-    --card: #1e2330;
-    --border: rgba(255,255,255,0.07);
-    --border2: rgba(255,255,255,0.13);
-    --text: #f0f0f0;
-    --muted: #8a8fa8;
-    --accent: #00e5ff;
-    --accent2: #8b5cf6;
-    --accent3: #f97316;
-    --serif: 'DM Serif Display', Georgia, serif;
-    --sans: 'Instrument Sans', sans-serif;
-    --mono: 'DM Mono', monospace;
-  }
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --bg3: #1a1a1a;
+
+  --card: #141414;
+
+  --border: rgba(212,175,55,0.08);
+  --border2: rgba(212,175,55,0.2);
+
+  --text: #f5f5f5;
+  --muted: #a3a3a3;
+
+  --accent: #d4af37;   /* 🔥 gold */
+  --accent2: #facc15;  /* light gold */
+  --accent3: #b8962e;  /* deep gold */
+
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Instrument Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -72,15 +77,15 @@
     align-self: flex-end;
     width: 48px; height: 48px;
     border-radius: 50%;
-    background: var(--accent);
+ background: linear-gradient(135deg, #d4af37, #facc15);
     border: none;
     cursor: pointer;
     font-size: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0d0f14;
-    box-shadow: 0 4px 20px rgba(94,155,234,0.35);
+  color: black;
+  box-shadow: 0 4px 20px rgba(212,175,55,0.4);
     transition: transform 0.15s;
   }
   .chat-toggle:hover { transform: scale(1.07); }
@@ -105,8 +110,8 @@
   }
   .chat-msg-user {
     align-self: flex-end;
-    background: var(--accent);
-    color: #0d0f14;
+     background: linear-gradient(135deg, #d4af37, #facc15);
+  color: black;
     padding: 6px 12px;
     border-radius: 12px 12px 3px 12px;
     max-width: 85%;
@@ -295,8 +300,8 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--accent);
-    color: #0d0f14;
+    background: linear-gradient(135deg, #d4af37, #facc15);
+  color: black;
     padding: 12px 24px;
     border-radius: 8px;
     font-weight: 600;
