@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hussam Rabaa — Software & AI Engineer</title>
+<title>Alaa Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
@@ -38,7 +38,141 @@
     overflow-x: hidden;
   }
 
-  /* ── NAV ── */
+  /* ── VIDEO BG ── */
+  .video-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -2;
+  }
+  .video-bg video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.65);
+    z-index: -1;
+  }
+
+  /* ── CHAT ── */
+  .chat-section {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 320px;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .chat-toggle {
+    align-self: flex-end;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0d0f14;
+    box-shadow: 0 4px 20px rgba(94,155,234,0.35);
+    transition: transform 0.15s;
+  }
+  .chat-toggle:hover { transform: scale(1.07); }
+  .chat-panel {
+    background: rgba(19,22,30,0.92);
+    backdrop-filter: blur(16px);
+    border: 0.5px solid var(--border2);
+    border-radius: 18px;
+    padding: 16px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .chat-panel.open { display: flex; }
+  .chat-box {
+    height: 220px;
+    overflow-y: auto;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .chat-msg-user {
+    align-self: flex-end;
+    background: var(--accent);
+    color: #0d0f14;
+    padding: 6px 12px;
+    border-radius: 12px 12px 3px 12px;
+    max-width: 85%;
+    font-size: 13px;
+  }
+  .chat-msg-bot {
+    align-self: flex-start;
+    background: var(--card);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 12px 12px 12px 3px;
+    max-width: 85%;
+    font-size: 13px;
+    border: 0.5px solid var(--border);
+  }
+  .chat-input-row {
+    display: flex;
+    gap: 6px;
+  }
+  .chat-input-row input {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 0.5px solid var(--border2);
+    background: var(--bg3);
+    color: var(--text);
+    font-size: 13px;
+    font-family: var(--sans);
+    outline: none;
+    margin: 0;
+  }
+  .chat-input-row button {
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent);
+    color: #0d0f14;
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .chat-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .chat-questions button {
+    padding: 5px 10px;
+    border-radius: 8px;
+    border: 0.5px solid var(--border2);
+    background: var(--bg3);
+    color: var(--muted);
+    font-size: 11px;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: all 0.2s;
+  }
+  .chat-questions button:hover {
+    background: var(--accent);
+    color: #0d0f14;
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 600px) {
+    .chat-section { right: 16px; bottom: 16px; width: 90vw; }
+  }
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -690,38 +824,20 @@
     margin: 0 48px;
   }
 </style>
-  /* VIDEO BACKGROUND */
-.video-bg{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:-2;
-}
-
-.video-bg video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* OVERLAY (خفيف عشان الفيديو يبين) */
-.overlay{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.35);
-  z-index:-1;
-}
 </head>
 <body>
 
+<!-- VIDEO BG -->
+<div class="video-bg">
+  <video autoplay muted loop playsinline>
+    <source src="bg.mp4" type="video/mp4">
+  </video>
+</div>
+<div class="overlay"></div>
+
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">Hussam Rabaa</div>
+  <div class="nav-logo">Alaa</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -735,9 +851,9 @@
 <div class="hero">
   <div class="hero-text">
     <div class="hero-eyebrow"><span></span> Available for opportunities</div>
-    <h1>Software &<br><em>AI Engineer</em></h1>
+    <h1>Alaa —<br><em>AI Engineer</em></h1>
     <p class="hero-desc">
-      Building scalable web systems and intelligent AI solutions — from full-stack applications to production-ready ML pipelines.
+      I build smart AI systems and web applications — from data pipelines and analytics dashboards to intelligent automation solutions.
     </p>
     <div class="hero-actions">
       <a href="#projects" class="btn-primary">View Projects →</a>
@@ -762,28 +878,24 @@
   <div class="hero-right">
     <div class="hero-card">
       <div class="profile-header">
-        <div class="avatar">HR</div>
+        <div class="avatar">AL</div>
         <div class="profile-info">
-          <h2>Hussam Rabaa</h2>
-          <p>Software & AI Engineer</p>
+          <h2>Alaa</h2>
+          <p>AI & Data Analytics Specialist</p>
         </div>
       </div>
       <div class="info-rows">
         <div class="info-row">
-          <span class="info-row-label">University</span>
-          <span class="info-row-val">Al-Zaytoonah University</span>
-        </div>
-        <div class="info-row">
-          <span class="info-row-label">Degree</span>
-          <span class="info-row-val">Software Engineering</span>
+          <span class="info-row-label">Field</span>
+          <span class="info-row-val">AI Engineer</span>
         </div>
         <div class="info-row">
           <span class="info-row-label">Program</span>
-          <span class="info-row-val">AI.SPire</span>
+          <span class="info-row-val">AI Diploma</span>
         </div>
         <div class="info-row">
-          <span class="info-row-label">IEEE Member</span>
-          <span class="info-row-val" style="color: var(--accent2);">Yes ✓</span>
+          <span class="info-row-label">Focus</span>
+          <span class="info-row-val">Automation, NLP, Systems</span>
         </div>
         <div class="info-row">
           <span class="info-row-label">Location</span>
@@ -1150,9 +1262,77 @@
 
 <!-- FOOTER -->
 <footer>
-  <span>Hussam Rabaa — Software & AI Engineer</span>
+  <span>Alaa — AI & Data Analytics Specialist</span>
   <span>Built with HTML · Jordan · 2025</span>
 </footer>
+
+<!-- CHAT -->
+<div class="chat-section">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-box" id="chatBox"></div>
+    <div class="chat-questions">
+      <button onclick="ask('who are you')">Who are you?</button>
+      <button onclick="ask('skills')">Skills</button>
+      <button onclick="ask('projects')">Projects</button>
+      <button onclick="ask('ai')">AI work?</button>
+      <button onclick="ask('experience')">Experience</button>
+      <button onclick="ask('goal')">Goal</button>
+      <button onclick="ask('python')">Python?</button>
+      <button onclick="ask('future')">Future plans?</button>
+      <button onclick="ask('contact')">Contact</button>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Ask me..." onkeydown="sendChat(event)">
+      <button onclick="sendChatBtn()">→</button>
+    </div>
+  </div>
+  <button class="chat-toggle" onclick="toggleChat()" title="Chat with Alaa">💬</button>
+</div>
+
+<script>
+function toggleChat() {
+  const p = document.getElementById('chatPanel');
+  p.classList.toggle('open');
+}
+function sendChat(e) {
+  if (e.key === 'Enter') { sendChatBtn(); }
+}
+function sendChatBtn() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  addMsg(text, true);
+  reply(text);
+  input.value = '';
+}
+function ask(q) {
+  addMsg(q, true);
+  reply(q);
+  document.getElementById('chatPanel').classList.add('open');
+}
+function addMsg(msg, isUser) {
+  const box = document.getElementById('chatBox');
+  const div = document.createElement('div');
+  div.className = isUser ? 'chat-msg-user' : 'chat-msg-bot';
+  div.textContent = isUser ? msg : '🤖 ' + msg;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+function reply(t) {
+  t = t.toLowerCase();
+  let r = "I'll get back to you soon!";
+  if (t.includes('who'))       r = "I'm Alaa, an AI & Data Analytics specialist based in Jordan.";
+  if (t.includes('skill'))     r = "Python, SQL, AI, Machine Learning, Data Analytics, Web Development.";
+  if (t.includes('project'))   r = "I built an AI email auto-reply system, KPI dashboards, ETL pipelines, and more.";
+  if (t.includes('ai'))        r = "Yes! I focus on AI systems, automation, and NLP.";
+  if (t.includes('experience')) r = "I have hands-on experience with real-world AI and data projects.";
+  if (t.includes('goal'))      r = "Build powerful, impactful AI solutions that solve real problems.";
+  if (t.includes('python'))    r = "Yes, Python is my main language for AI and data work.";
+  if (t.includes('future'))    r = "Scaling AI products and expanding expertise in intelligent systems.";
+  if (t.includes('contact'))   r = "Reach me at alaa.falugi88@gmail.com or via LinkedIn.";
+  setTimeout(() => addMsg(r, false), 500);
+}
+</script>
 
 <script>
 function filterProjects(cat, btn) {
@@ -1167,37 +1347,5 @@ function filterProjects(cat, btn) {
   });
 }
 </script>
-<!-- 🔊 SOUND -->
-<audio id="clickSound" src="click.mp3"></audio>
-<audio id="music" src="music.mp3"></audio>
-
-<script>
-
-/* 🔥 تشغيل الميوزك (لازم user click) */
-document.addEventListener("click", () => {
-  const music = document.getElementById("music");
-  if (music.paused) {
-    music.volume = 0.4; // خفف الصوت
-    music.play().catch(()=>{});
-  }
-});
-
-/* 🔊 click sound */
-function playClick(){
-  const click = document.getElementById("clickSound");
-  click.currentTime = 0;
-  click.play();
-}
-
-</script>
-  
 </body>
-  <!-- VIDEO -->
-<div class="video-bg">
-  <video autoplay muted loop playsinline>
-    <source src="bg.mp4" type="video/mp4">
-  </video>
-</div>
-
-<div class="overlay"></div>
 </html>
